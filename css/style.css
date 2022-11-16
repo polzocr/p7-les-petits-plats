@@ -20,6 +20,57 @@ h1 {
   box-sizing: border-box;
 }
 
+#tags {
+  margin-top: 2%;
+  display: flex;
+  gap: 0.5%;
+  flex-wrap: wrap;
+}
+
+.ingredients {
+  background-color: #3282F7;
+}
+
+.appareil {
+  background-color: #68D9A4;
+}
+
+.ustensile {
+  background-color: #ED6454;
+}
+
+.tag {
+  width: 107px;
+  height: 37px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.tag p {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+.tag button {
+  color: white;
+  border: 2px solid white;
+  width: 20px;
+  height: 20px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(45deg);
+}
+.tag button:hover {
+  cursor: pointer;
+}
+.tag button span {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .header__logo {
   text-align: center;
 }

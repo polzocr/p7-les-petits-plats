@@ -3,6 +3,8 @@ class Index{
         this.api = new Api('../data/recipe.json') //data appelées ici
         this.recipes = [] 
         this.section = document.getElementById('cards')
+        this.ingredients = []
+        this.tag;
 
     }
 
@@ -10,6 +12,11 @@ class Index{
     async fetchData(){
         const dataApi = await this.api.get()
         this.recipes = dataApi
+        const recipeIng = []
+        this.recipes.forEach(x => {
+            x.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient))
+        })
+        this.ingredients = new Set([...recipeIng])
     }
 
     async displayData(){
