@@ -1,0 +1,74 @@
+#cards{
+    margin-top: 5%;
+    display: flex;
+    gap: 3%;
+    flex-wrap: wrap;
+}
+
+.card{
+    width: 360px;
+    height: 365px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin-top: 3%;
+    &__image{
+        height: 48%;
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: $color-image;
+    }
+    &__infos{
+        width: 100%;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color: $background-color;
+        padding: 2% 4% 10% 4%;
+        &__header{
+            display: flex;
+            justify-content: space-between;
+            h2{
+                font-weight: 400;
+                font-size: 18px;
+            }
+            &__timer{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                p{
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+                i{
+                    font-size: 18px;
+                }
+            }
+        }
+        &__recipe{
+            display: flex;
+            align-items: baseline;
+            &__ingredients{
+                width: 50%;
+                p{
+                    font-size: 12px;
+                    line-height: 14.4px;
+                    margin: 0;
+                    span{
+                        font-weight: 700;
+                    }
+                }
+            }
+            &__description{
+                display: block;
+                width: 50%;
+                p{
+                    font-size: 12px;
+                    font-weight: 400;
+                    font-family: 'Roboto';
+                    line-height: 12px;
+                }
+            }
+        }
+    }
+}

@@ -52,4 +52,79 @@ h1 {
   opacity: 0.8;
 }
 
+#cards {
+  margin-top: 5%;
+  display: flex;
+  gap: 3%;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 360px;
+  height: 365px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin-top: 3%;
+}
+.card__image {
+  height: 48%;
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #C7BEBE;
+}
+.card__infos {
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #E7E7E7;
+  padding: 2% 4% 10% 4%;
+}
+.card__infos__header {
+  display: flex;
+  justify-content: space-between;
+}
+.card__infos__header h2 {
+  font-weight: 400;
+  font-size: 18px;
+}
+.card__infos__header__timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card__infos__header__timer p {
+  font-weight: 700;
+  font-size: 18px;
+}
+.card__infos__header__timer i {
+  font-size: 18px;
+}
+.card__infos__recipe {
+  display: flex;
+  align-items: baseline;
+}
+.card__infos__recipe__ingredients {
+  width: 50%;
+}
+.card__infos__recipe__ingredients p {
+  font-size: 12px;
+  line-height: 14.4px;
+  margin: 0;
+}
+.card__infos__recipe__ingredients p span {
+  font-weight: 700;
+}
+.card__infos__recipe__description {
+  display: block;
+  width: 50%;
+}
+.card__infos__recipe__description p {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Roboto";
+  line-height: 12px;
+}
+
 /*# sourceMappingURL=style.css.map */
