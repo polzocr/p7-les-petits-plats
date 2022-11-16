@@ -1,0 +1,19 @@
+{
+  "name": "p7-les-petits-plats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/main.scss:./css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polzocr/p7-les-petits-plats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/polzocr/p7-les-petits-plats/issues"
+  },
+  "homepage": "https://github.com/polzocr/p7-les-petits-plats#readme"
+}
