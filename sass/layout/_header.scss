@@ -1,0 +1,32 @@
+.header__logo{
+    text-align: center;
+    h1{
+        margin: 0;
+    }
+}
+
+.header__search{
+    margin-top: 2%;
+    position: relative;
+    input{
+        width: 99.8%;
+        height: 69px;
+        background-color: $background-color;
+        padding-left: 2%;
+        font-size: 18px;
+        font-family: "DM Sans", sans-serif;
+        border: none;
+        border-radius: 5px;
+    &::placeholder{
+        opacity: 0.6;
+    }   
+        
+    }
+    i{
+        position: absolute;
+        font-size: 35px;
+        right: 20px;
+        top: 17px;
+        opacity: 0.8;
+    }
+}

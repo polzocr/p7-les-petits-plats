@@ -1,9 +1,55 @@
 body {
+  font-family: "DM Sans", sans-serif;
   box-sizing: border-box;
+  margin: auto;
+  width: 80%;
+  padding-top: 2%;
 }
 
 main {
   box-sizing: border-box;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 36px;
+  color: #D04F4F;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header__logo {
+  text-align: center;
+}
+.header__logo h1 {
+  margin: 0;
+}
+
+.header__search {
+  margin-top: 2%;
+  position: relative;
+}
+.header__search input {
+  width: 99.8%;
+  height: 69px;
+  background-color: #E7E7E7;
+  padding-left: 2%;
+  font-size: 18px;
+  font-family: "DM Sans", sans-serif;
+  border: none;
+  border-radius: 5px;
+}
+.header__search input::placeholder {
+  opacity: 0.6;
+}
+.header__search i {
+  position: absolute;
+  font-size: 35px;
+  right: 20px;
+  top: 17px;
+  opacity: 0.8;
 }
 
 /*# sourceMappingURL=style.css.map */

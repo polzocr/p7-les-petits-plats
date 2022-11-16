@@ -1,6 +1,9 @@
 body {
-    
+    font-family: "DM Sans", sans-serif;
     box-sizing: border-box;
+    margin: auto;
+    width: 80%;
+    padding-top: 2%;
 }
 
 main{
@@ -8,11 +11,16 @@ main{
     box-sizing: border-box;
 }
 h1 {
-    
+    font-weight: 700;  
+    font-size: 36px;
+    color: $title-color;
 }
 
  h2{
         
+}
+*{
+    box-sizing: border-box;
 }
 
 
