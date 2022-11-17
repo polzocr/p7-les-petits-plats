@@ -85,7 +85,7 @@ h1 {
   content: "";
   position: absolute;
   top: 27px;
-  left: 140px;
+  right: 16px;
   z-index: 1;
   width: 8px;
   height: 8px;
@@ -111,9 +111,29 @@ h1 {
 }
 .dropdown__search:focus {
   outline: none;
+  width: 660px;
+}
+.dropdown__all {
+  display: none;
+  max-width: 660px;
+  padding-left: 2%;
+  flex-wrap: wrap;
+  margin-top: -3px;
+  position: absolute;
+}
+.dropdown__all p {
+  width: 33%;
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  margin: 1% 0 1% 0;
 }
 
-.one {
+.show {
+  display: flex;
+}
+
+.ingredients {
   background-color: #3282F7;
 }
 
