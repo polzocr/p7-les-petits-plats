@@ -115,18 +115,19 @@ h1 {
 }
 .dropdown__all {
   display: none;
-  max-width: 660px;
-  padding-left: 2%;
+  width: 660px;
   flex-wrap: wrap;
   margin-top: -3px;
   position: absolute;
 }
-.dropdown__all p {
+.dropdown__all button {
   width: 33%;
   font-size: 18px;
   font-weight: 400;
   color: white;
   margin: 1% 0 1% 0;
+  background-color: #3282F7;
+  border: none;
 }
 
 .show {

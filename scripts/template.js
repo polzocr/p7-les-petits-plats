@@ -40,23 +40,6 @@ class Template {
                                 </div>
                             </div>
                         </article>`;
-        
-        
-        
-        // const article = document.createElement('article')
-        // article.classList.add('card')
-
-        // const divImage = document.createElement('div')
-        // divImage.classList.add('card__image')
-
-        // const divInfos = document.createElement('div')
-        // divInfos.classList.add('card__infos')
-
-        // article.appendChild(divImage)
-        // article.appendChild(divInfos)
-
-        // const infoHeader = document.createElement
-
 
 
         return article
