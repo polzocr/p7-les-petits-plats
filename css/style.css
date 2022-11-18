@@ -27,15 +27,15 @@ h1 {
   flex-wrap: wrap;
 }
 
-.ingredients {
+.Ingredients {
   background-color: #3282F7;
 }
 
-.appareil {
+.Appareils {
   background-color: #68D9A4;
 }
 
-.ustensile {
+.Ustensiles {
   background-color: #ED6454;
 }
 
@@ -126,7 +126,6 @@ h1 {
   font-weight: 400;
   color: white;
   margin: 1% 0 1% 0;
-  background-color: #3282F7;
   border: none;
 }
 
@@ -134,7 +133,7 @@ h1 {
   display: flex;
 }
 
-.ingredients {
+.Ingredients {
   background-color: #3282F7;
 }
 

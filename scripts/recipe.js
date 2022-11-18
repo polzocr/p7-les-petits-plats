@@ -1,4 +1,4 @@
-class Template {
+class Recipe {
     constructor(recipe){
         recipe && Object.assign(this, recipe)
     }
