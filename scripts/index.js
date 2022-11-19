@@ -13,6 +13,7 @@ class Index{
         this.tagsIng = []
         this.tagsDev = []
         this.tagsTool = []
+        this.tags = []
 
     }
 
@@ -36,6 +37,7 @@ class Index{
 
 
     async displayData(){
+        this.getNew()
         this.displayCards();
         this.displayIngredients();
         this.displayDevices();
@@ -51,18 +53,39 @@ class Index{
         })
     }
 
+    async getNew(){
+        this.getNewRecipes()
+        this.getNewIng()
+        this.getNewDev()
+        this.getNewTool()
+    }
 
+    async getNewRecipes(query, tags){
+        if(query){
 
-    async displayIngredients(value){
-        const recipeIng = []
-
-        if(value){
-            this.newIngredients = this.ingredients.filter(x => x.toLowerCase().includes(value.toLowerCase()))
-            document.querySelectorAll('.dropdown__all')[0].innerHTML = null
-        } else if(this.tagsIng.length > 0) {
+        } 
+        if(this.tagsIng.length > 0){
             this.tagsIng.forEach(tag => {
                 this.newRecipes = this.newRecipes.filter(recipe =>  recipe.ingredients.some(ing => ing.ingredient == tag ) == true)
             })
+        }
+        if(this.tagsDev.length > 0){
+            this.tagsDev.forEach(tag => {
+                this.newRecipes = this.newRecipes.filter(recipe => recipe.appliance == tag)
+            })
+        } 
+        if(this.tagsTool.length > 0){
+            this.tagsTool.forEach(tag => {
+                this.newRecipes = this.newRecipes.filter(recipe => recipe.ustensils.some(ust => ust == tag) == true)
+            })
+        }
+    }
+
+    async getNewIng(query){
+        const recipeIng = []
+        if(query){
+            return this.newIngredients = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        } else if(this.tagsIng.length > 0){
             this.newRecipes.forEach(recipe => {
                 recipe.ingredients.forEach(ingredient => {
                     let validation = true
@@ -76,35 +99,144 @@ class Index{
                     }
                 })
             })
-            
             this.newIngredients = [...new Set(recipeIng)]
-            console.log(this.newIngredients)
-            this.displayCards()
-            
-            
-            document.querySelectorAll('.dropdown__all')[0].innerHTML = null
         } else {
-            document.querySelectorAll('.dropdown__all')[0].innerHTML = null
+            this.newRecipes.forEach(recipe => {
+                recipe.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient))
+        })
+            this.newIngredients =  [...new Set(recipeIng)]
         }
 
+    }
+
+    async getNewDev(query){
+        const recipeDev = []
+        if(query){
+            return this.newDevices = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        } else if(this.tagsDev.length > 0){
+            this.newRecipes.forEach(recipe => {
+                let validation = true
+                for(let i=0;i < this.tagsDev.length; i++){
+                    if(recipe.appliance == this.tagsDev[i]){
+                        validation = false
+                    }
+                }
+                if(validation == true){
+                    recipeDev.push(recipe.appliance)
+                }   
+            })
+            this.newDevices = [...new Set(recipeDev)]
+        } else{
+            this.newRecipes.forEach(recipe => {
+                recipeDev.push(recipe.appliance)
+            })
+            this.newDevices =  [...new Set(recipeDev)]
+        }
+
+    }
+
+    async getNewTool(query){
+        const recipeTool = []
+        if(query){
+            return this.newTools = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        } else if(this.tagsTool.length > 0){
+            this.newRecipes.forEach(recipe => {
+                recipe.ustensils.forEach(ustensil => {
+                    let validation = true
+                    for(let i=0;i < this.tagsTool.length; i++){
+                        if(ustensil == this.tagsTool[i]){
+                            validation = false
+                        }
+                    }
+                    if(validation == true){
+                        recipeTool.push(ustensil)
+                    }
+                })
+            })
+            this.newTools = [...new Set(recipeTool)]
+        } else {
+            this.newRecipes.forEach(recipe => {
+                recipe.ustensils.forEach(ustensil => recipeTool.push(ustensil))
+        })
+            this.newTools =  [...new Set(recipeTool)]
+        }
+    }
+
+
+    async displayIngredients(query){
+        document.querySelectorAll('.dropdown__all')[0].innerHTML = null
         const dropIng = new Ingredient(this.newIngredients,0, 'Ingredients')
         dropIng.createTemplate()
         dropIng.events(this, this.tagsIng)
     }
 
     async search(){
+        this.eventIngredients()
+        this.eventDevices()
+        this.eventTools()
+        this.displayData()
+       
+        
+    }
+
+    async eventIngredients(){
         const that = this;
         document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
             const query = this.value
             if(query.length > 2){
-                that.displayIngredients(query)
-            } else {
+                that.getNewIng(query)
                 that.displayIngredients()
+            } else {
+                if(that.tags == 0){
+                    that.newIngredients = that.ingredients
+                    that.displayIngredients()
+                } else {
+                    that.getNewIng()
+                    that.displayIngredients()
+                }
+                
             }
         })
-        this.displayData()
-       
-        
+    }
+
+    async eventDevices(){
+        const that = this;
+        document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.getNewDev(query)
+                that.displayDevices()
+            } else {
+                if(that.tags == 0){
+                    that.newDevices = that.devices
+                    that.displayDevices()
+                } else {
+                    that.getNewDev()
+                    that.displayDevices()
+                }
+                
+            }
+        })
+    }
+
+    async eventTools(){
+        const that = this;
+        document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.getNewTool(query)
+                that.displayTools()
+            } else {
+                if(that.tags == 0){
+                    that.newTools = that.tools
+                    that.displayTools()
+                } else {
+                    that.getNewTool()
+                    that.displayTools()
+                }
+                
+            }
+        })
     }
 
 

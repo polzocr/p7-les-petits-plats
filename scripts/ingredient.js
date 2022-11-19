@@ -14,11 +14,12 @@ class Ingredient extends Dropdown {
         const ingreThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
+                that.tags.push(x.textContent)
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Ingredients')
                 newTag.displayTag()
                 ingreThis.closeDropdown()
-                that.displayIngredients()
+                that.displayData()
             })
         })
     }
@@ -31,7 +32,7 @@ class Ingredient extends Dropdown {
 
 
 
-    
+
 
 
     // createTemplate(){

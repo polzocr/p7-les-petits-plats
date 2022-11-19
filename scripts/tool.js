@@ -7,11 +7,12 @@ class Tool extends Dropdown{
         const ingreThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
+                that.tags.push(x.textContent)
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Ustensiles')
                 newTag.displayTag()
                 ingreThis.closeDropdown()
-                that.displayTools()
+                that.displayData()
             })
         })
     }
