@@ -18,6 +18,7 @@ class Ingredient extends Dropdown {
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Ingredients')
                 newTag.displayTag()
+                newTag.removeTag(that)
                 ingreThis.closeDropdown()
                 that.displayData()
             })

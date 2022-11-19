@@ -17,6 +17,7 @@ class Device extends Dropdown{
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Appareils')
                 newTag.displayTag()
+                newTag.removeTag(that)
                 devThis.closeDropdown()
                 that.displayData()
             })

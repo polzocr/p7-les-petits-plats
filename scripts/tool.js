@@ -11,6 +11,7 @@ class Tool extends Dropdown{
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Ustensiles')
                 newTag.displayTag()
+                newTag.removeTag(that)
                 ingreThis.closeDropdown()
                 that.displayData()
             })
