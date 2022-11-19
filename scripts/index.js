@@ -44,6 +44,15 @@ class Index{
         this.displayTools();
     }
 
+    
+
+    async getNew(){
+        this.getNewRecipes()
+        this.getNewIng()
+        this.getNewDev()
+        this.getNewTool()
+    }
+
     async displayCards(){
         this.section.innerHTML =  null
         this.newRecipes.forEach(recipe => {
@@ -53,17 +62,7 @@ class Index{
         })
     }
 
-    async getNew(){
-        this.getNewRecipes()
-        this.getNewIng()
-        this.getNewDev()
-        this.getNewTool()
-    }
-
-    async getNewRecipes(query, tags){
-        if(query){
-
-        } 
+    async getNewRecipes(){
         if(this.tagsIng.length > 0){
             this.tagsIng.forEach(tag => {
                 this.newRecipes = this.newRecipes.filter(recipe =>  recipe.ingredients.some(ing => ing.ingredient == tag ) == true)
@@ -81,11 +80,40 @@ class Index{
         }
     }
 
+    async searchRecipes(query){
+        let test = "Découper le thon en dés, mettre dans un plat et recouvrir de jus de citron vert (mieux vaut prendre un plat large et peu profond). Laisser reposer au réfrigérateur au moins 2 heures. (Si possible faites-le le soir pour le lendemain. Après avoir laissé mariner le poisson, coupez le concombre en fines rondelles sans la peau et les tomates en prenant soin de retirer les pépins. Rayer la carotte. Ajouter les légumes au poissons avec le citron cette fois ci dans un Saladier. Ajouter le lait de coco. Pour ajouter un peu plus de saveur vous pouvez ajouter 1 à 2 cuillères à soupe de Crème de coco"
+        console.log(test.toLocaleLowerCase().includes('blanc'))
+        this.newRecipes = this.newRecipes.filter(recipe => {
+            return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
+        })
+        console.log(this.newRecipes)
+    }
+
+    async eventRecipes(){
+        const that = this;
+        document.querySelector('#Recherche').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.newRecipes = that.recipes
+                that.getNewRecipes()
+                that.searchRecipes(query)
+                that.displayCards()
+            } else {
+                if(that.tags == 0){
+                    that.newRecipes = that.recipes
+                    that.displayCards()
+                } else {
+                    that.newRecipes = that.recipes
+                    that.getNewRecipes()
+                    that.displayCards()
+                }
+            }
+        })
+    }
+
     async getNewIng(query){
         const recipeIng = []
-        if(query){
-            return this.newIngredients = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        } else if(this.tagsIng.length > 0){
+        if(this.tagsIng.length > 0){
             this.newRecipes.forEach(recipe => {
                 recipe.ingredients.forEach(ingredient => {
                     let validation = true
@@ -109,11 +137,45 @@ class Index{
 
     }
 
-    async getNewDev(query){
+    async searchIng(query){
+        this.newIngredients = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+    }
+
+    async eventIngredients(){
+        const that = this;
+        document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.newIngredients = that.ingredients
+                that.getNewIng()
+                that.searchIng(query)
+                that.displayIngredients()
+            } else {
+                if(that.tags == 0){
+                    that.newIngredients = that.ingredients
+                    that.displayIngredients()
+                } else {
+                    that.getNewIng()
+                    that.displayIngredients()
+                }
+                
+            }
+        })
+    }
+
+    async displayIngredients(query){
+        document.querySelectorAll('.dropdown__all')[0].innerHTML = null
+        const dropIng = new Ingredient(this.newIngredients,0, 'Ingredients')
+        dropIng.createTemplate()
+        dropIng.events(this, this.tagsIng)
+    }
+
+
+
+
+    async getNewDev(){
         const recipeDev = []
-        if(query){
-            return this.newDevices = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        } else if(this.tagsDev.length > 0){
+        if(this.tagsDev.length > 0){
             this.newRecipes.forEach(recipe => {
                 let validation = true
                 for(let i=0;i < this.tagsDev.length; i++){
@@ -135,11 +197,44 @@ class Index{
 
     }
 
-    async getNewTool(query){
+    async searchDev(query){
+        this.newDevices = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+    }
+
+    async eventDevices(){
+        const that = this;
+        document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.newDevices = that.devices
+                that.getNewDev()
+                that.searchDev(query)
+                that.displayDevices()
+            } else {
+                if(that.tags == 0){
+                    that.newDevices = that.devices
+                    that.displayDevices()
+                } else {
+                    that.getNewDev()
+                    that.displayDevices()
+                }
+                
+            }
+        })
+    }
+
+    async displayDevices(){
+        document.querySelectorAll('.dropdown__all')[1].innerHTML = null
+        const dropDev = new Device(this.newDevices,1, 'Appareils')
+        dropDev.createTemplate()
+        dropDev.events(this, this.tagsDev)
+    }
+
+
+
+    async getNewTool(){
         const recipeTool = []
-        if(query){
-            return this.newTools = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        } else if(this.tagsTool.length > 0){
+        if(this.tagsTool.length > 0){
             this.newRecipes.forEach(recipe => {
                 recipe.ustensils.forEach(ustensil => {
                     let validation = true
@@ -162,61 +257,8 @@ class Index{
         }
     }
 
-
-    async displayIngredients(query){
-        document.querySelectorAll('.dropdown__all')[0].innerHTML = null
-        const dropIng = new Ingredient(this.newIngredients,0, 'Ingredients')
-        dropIng.createTemplate()
-        dropIng.events(this, this.tagsIng)
-    }
-
-    async search(){
-        this.eventIngredients()
-        this.eventDevices()
-        this.eventTools()
-        this.displayData()
-       
-        
-    }
-
-    async eventIngredients(){
-        const that = this;
-        document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
-            const query = this.value
-            if(query.length > 2){
-                that.getNewIng(query)
-                that.displayIngredients()
-            } else {
-                if(that.tags == 0){
-                    that.newIngredients = that.ingredients
-                    that.displayIngredients()
-                } else {
-                    that.getNewIng()
-                    that.displayIngredients()
-                }
-                
-            }
-        })
-    }
-
-    async eventDevices(){
-        const that = this;
-        document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
-            const query = this.value
-            if(query.length > 2){
-                that.getNewDev(query)
-                that.displayDevices()
-            } else {
-                if(that.tags == 0){
-                    that.newDevices = that.devices
-                    that.displayDevices()
-                } else {
-                    that.getNewDev()
-                    that.displayDevices()
-                }
-                
-            }
-        })
+    async searchTool(query){
+        this.newTools = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
     }
 
     async eventTools(){
@@ -224,7 +266,9 @@ class Index{
         document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
             const query = this.value
             if(query.length > 2){
-                that.getNewTool(query)
+                that.newTools = that.tools
+                that.getNewTool()
+                that.searchTool(query)
                 that.displayTools()
             } else {
                 if(that.tags == 0){
@@ -239,24 +283,42 @@ class Index{
         })
     }
 
-
-
-
-
-  
-    async displayDevices(){
-        document.querySelectorAll('.dropdown__all')[1].innerHTML = null
-        const dropDev = new Device(this.newDevices,1, 'Appareils')
-        dropDev.createTemplate()
-        dropDev.events(this, this.tagsDev)
-    }
-
     async displayTools(){
         document.querySelectorAll('.dropdown__all')[2].innerHTML = null
         const dropTool = new Tool(this.newTools, 2, 'Ustensiles')
         dropTool.createTemplate()
         dropTool.events(this, this.tagsTool)
     }
+
+
+    
+
+    async search(){
+        this.eventIngredients()
+        this.eventDevices()
+        this.eventTools()
+        this.eventRecipes()
+        this.displayData()
+       
+        
+    }
+
+ 
+
+    
+
+    
+
+
+
+
+
+
+
+  
+    
+
+ 
 
 
    
