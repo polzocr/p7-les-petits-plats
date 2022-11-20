@@ -15,6 +15,8 @@ class Index{
         this.tagsTool = []
         this.tags = []
 
+        this.queryIngredients = []
+        this.search()
     }
 
 
@@ -138,8 +140,44 @@ class Index{
     }
 
     
+    async searchIng(query){
+        const search = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        this.queryIngredients = new Set(search)
+    }
 
+    async eventIngredients(){
+        const that = this;
+        document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.searchIng(query)
+                console.log(that.queryIngredients)
+                // that.newIngredients = that.ingredients
+                // that.getNewIng()
+                // that.searchIng(query)
+                // that.displayIngredients()
+            } 
+            // else {
+            //     if(that.tags == 0){
+            //         that.newIngredients = that.ingredients
+            //         that.displayIngredients()
+            //     } else {
+            //         that.getNewIng()
+            //         that.displayIngredients()
+            //     }
+                
+            // }
+        })
+    }
 
+    
+
+    async search(){
+        this.eventIngredients()
+        // this.eventDevices()
+        // this.eventTools()
+        // this.eventRecipes()
+    }
 
 
 
@@ -273,15 +311,7 @@ class Index{
 
     
 
-    async search(){
-        this.eventIngredients()
-        this.eventDevices()
-        this.eventTools()
-        this.eventRecipes()
-        this.displayData()
-       
-        
-    }
+    
 
  
 
