@@ -19,7 +19,7 @@ class Device extends Dropdown{
                 newTag.displayTag()
                 newTag.removeTag(that)
                 devThis.closeDropdown()
-                that.displayData()
+                that.updateDatas()
             })
         })
     }

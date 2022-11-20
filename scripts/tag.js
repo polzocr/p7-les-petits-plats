@@ -34,19 +34,13 @@ class Tag{
             tag.nextElementSibling.addEventListener('click', function(e){
                 this.parentElement.remove()
                 thisTag.rebuildDatas(that)
-                that.displayData()
+                that.updateDatas()
             })
         })
     }
 
     rebuildDatas(that){
-        that.newRecipes = that.recipes
-        that.newIngredients = that.ingredients
-        that.newDevices = that.devices
-        that.newTools = that.tools
-        that.tagsIng = that.tagsIng.filter(tag => tag !== this.name)
-        that.tagsDev = that.tagsDev.filter(tag => tag !== this.name)
-        that.tagsTool = that.tagsTool.filter(tag => tag !== this.name)
-        that.tags = that.tags.filter(tag => tag !== this.name)
+        that.resetDatas()
+        that.resetTags(this.name)
     }
 }

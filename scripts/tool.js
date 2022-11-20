@@ -13,7 +13,7 @@ class Tool extends Dropdown{
                 newTag.displayTag()
                 newTag.removeTag(that)
                 ingreThis.closeDropdown()
-                that.displayData()
+                that.updateDatas()
             })
         })
     }
