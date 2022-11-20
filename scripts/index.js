@@ -16,6 +16,8 @@ class Index{
         this.tags = []
 
         this.queryIngredients = []
+        this.queryDevices = []
+        this.queryTools = []
         this.search()
     }
 
@@ -69,9 +71,9 @@ class Index{
         this.newIngredients =  [...new Set(recipeIng)]
     }
 
-    async displayIngredients(query){
+    async displayIngredients(ingredients){
         document.querySelectorAll('.dropdown__all')[0].innerHTML = null
-        const dropIng = new Ingredient(this.newIngredients,0, 'Ingredients')
+        const dropIng = new Ingredient(ingredients ,0, 'Ingredients')
         dropIng.createTemplate()
         dropIng.events(this, this.tagsIng)
     }
@@ -84,9 +86,9 @@ class Index{
         this.newDevices =  [...new Set(recipeDevices)]
     }
 
-    async displayDevices(){
+    async displayDevices(devices){
         document.querySelectorAll('.dropdown__all')[1].innerHTML = null
-        const dropDev = new Device(this.newDevices,1, 'Appareils')
+        const dropDev = new Device(devices,1, 'Appareils')
         dropDev.createTemplate()
         dropDev.events(this, this.tagsDev)
     }
@@ -99,9 +101,9 @@ class Index{
         this.newTools = [...new Set(recipeTools)]
     }
 
-    async displayTools(){
+    async displayTools(tools){
         document.querySelectorAll('.dropdown__all')[2].innerHTML = null
-        const dropTool = new Tool(this.newTools, 2, 'Ustensiles')
+        const dropTool = new Tool(tools, 2, 'Ustensiles')
         dropTool.createTemplate()
         dropTool.events(this, this.tagsTool)
     }
@@ -111,18 +113,18 @@ class Index{
         this.getNewRecipes()
         this.displayCards()
         this.getNewIngredients()
-        this.displayIngredients()
+        this.displayIngredients(this.newIngredients)
         this.getNewDevices()
-        this.displayDevices()
+        this.displayDevices(this.newDevices)
         this.getNewTools()
-        this.displayTools()
+        this.displayTools(this.newTools)
     }
 
     async displayDatas(){
         this.displayCards()
-        this.displayIngredients()
-        this.displayDevices()
-        this.displayTools()
+        this.displayIngredients(this.newIngredients)
+        this.displayDevices(this.newDevices)
+        this.displayTools(this.newTools)
     }
 
     async resetDatas(){
@@ -142,7 +144,7 @@ class Index{
     
     async searchIng(query){
         const search = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        this.queryIngredients = new Set(search)
+        this.queryIngredients = [...new Set(search)]
     }
 
     async eventIngredients(){
@@ -151,22 +153,61 @@ class Index{
             const query = this.value
             if(query.length > 2){
                 that.searchIng(query)
-                console.log(that.queryIngredients)
-                // that.newIngredients = that.ingredients
-                // that.getNewIng()
-                // that.searchIng(query)
-                // that.displayIngredients()
-            } 
-            // else {
-            //     if(that.tags == 0){
-            //         that.newIngredients = that.ingredients
-            //         that.displayIngredients()
-            //     } else {
-            //         that.getNewIng()
-            //         that.displayIngredients()
-            //     }
+                that.displayIngredients(that.queryIngredients)
+            } else {
+                if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
+                    that.displayIngredients(that.ingredients)
+                } else {
+                    that.displayIngredients(that.newIngredients)
+                }
                 
-            // }
+            }
+        })
+    }
+
+    async searchDev(query){
+        const search = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        this.queryDevices = [...new Set(search)]
+    }
+
+    async eventDevices(){
+        const that = this;
+        document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.searchDev(query)
+                that.displayDevices(that.queryDevices)
+            } else {
+                if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
+                    that.displayDevices(that.devices)
+                } else {
+                    that.displayDevices(that.newDevices)
+                }
+                
+            }
+        })
+    }
+
+    async searchTool(query){
+        const search = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
+        this.queryTools = [...new Set(search)]
+    }
+
+    async eventTools(){
+        const that = this;
+        document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.searchTool(query)
+                that.displayTools(that.queryTools)
+            } else {
+                if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
+                    that.displayTools(that.tools)
+                } else {
+                    that.displayTools(that.newTools)
+                }
+                
+            }
         })
     }
 
@@ -174,8 +215,8 @@ class Index{
 
     async search(){
         this.eventIngredients()
-        // this.eventDevices()
-        // this.eventTools()
+        this.eventDevices()
+        this.eventTools()
         // this.eventRecipes()
     }
 
@@ -220,92 +261,13 @@ class Index{
 
 
 
-    // async searchIng(query){
-    //     this.newIngredients = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    // }
-
-    // async eventIngredients(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.newIngredients = that.ingredients
-    //             that.getNewIng()
-    //             that.searchIng(query)
-    //             that.displayIngredients()
-    //         } else {
-    //             if(that.tags == 0){
-    //                 that.newIngredients = that.ingredients
-    //                 that.displayIngredients()
-    //             } else {
-    //                 that.getNewIng()
-    //                 that.displayIngredients()
-    //             }
-                
-    //         }
-    //     })
-    // }
 
 
 
 
 
 
-    // async searchDev(query){
-    //     this.newDevices = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    // }
 
-    // async eventDevices(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.newDevices = that.devices
-    //             that.getNewDev()
-    //             that.searchDev(query)
-    //             that.displayDevices()
-    //         } else {
-    //             if(that.tags == 0){
-    //                 that.newDevices = that.devices
-    //                 that.displayDevices()
-    //             } else {
-    //                 that.getNewDev()
-    //                 that.displayDevices()
-    //             }
-                
-    //         }
-    //     })
-    // }
-
-
-
-
-
-    // async searchTool(query){
-    //     this.newTools = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    // }
-
-    // async eventTools(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.newTools = that.tools
-    //             that.getNewTool()
-    //             that.searchTool(query)
-    //             that.displayTools()
-    //         } else {
-    //             if(that.tags == 0){
-    //                 that.newTools = that.tools
-    //                 that.displayTools()
-    //             } else {
-    //                 that.getNewTool()
-    //                 that.displayTools()
-    //             }
-                
-    //         }
-    //     })
-    // }
 
 
 
