@@ -14,7 +14,8 @@ class Index{
         this.tagsDev = []
         this.tagsTool = []
         this.tags = []
-
+        
+        this.queryRecipes = []
         this.queryIngredients = []
         this.queryDevices = []
         this.queryTools = []
@@ -54,9 +55,9 @@ class Index{
         }
     }
 
-    async displayCards(){
+    async displayRecipes(recipes){
         this.section.innerHTML =  null
-        this.newRecipes.forEach(recipe => {
+        recipes.forEach(recipe => {
             const card = new Recipe(recipe)
             const templateFinal = card.createTemplate()
             this.section.innerHTML += templateFinal
@@ -111,7 +112,7 @@ class Index{
     
     async updateDatas(){
         this.getNewRecipes()
-        this.displayCards()
+        this.displayRecipes(this.newRecipes)
         this.getNewIngredients()
         this.displayIngredients(this.newIngredients)
         this.getNewDevices()
@@ -121,7 +122,7 @@ class Index{
     }
 
     async displayDatas(){
-        this.displayCards()
+        this.displayRecipes(this.newRecipes)
         this.displayIngredients(this.newIngredients)
         this.displayDevices(this.newDevices)
         this.displayTools(this.newTools)
@@ -211,13 +212,37 @@ class Index{
         })
     }
 
+    async searchRecipes(query){
+        this.queryRecipes = this.newRecipes.filter(recipe => {
+            return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
+        })
+    }
+
+    async eventRecipes(){
+        const that = this;
+        document.querySelector('#Recherche').addEventListener('input', function(e){
+            const query = this.value
+            if(query.length > 2){
+                that.searchRecipes(query)
+                that.displayRecipes(that.queryRecipes)
+            } else {
+                if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
+                    that.displayRecipes(that.recipes)
+                } else {
+                    that.displayRecipes(that.newRecipes)
+                }
+                
+            }
+        })
+    }
+
     
 
     async search(){
+        this.eventRecipes()
         this.eventIngredients()
         this.eventDevices()
         this.eventTools()
-        // this.eventRecipes()
     }
 
 
@@ -231,33 +256,7 @@ class Index{
 
     
 
-    // async searchRecipes(query){
-    //     this.newRecipes = this.newRecipes.filter(recipe => {
-    //         return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
-    //     })
-    // }
-
-    // async eventRecipes(){
-    //     const that = this;
-    //     document.querySelector('#Recherche').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.newRecipes = that.recipes
-    //             that.getNewRecipes()
-    //             that.searchRecipes(query)
-    //             that.displayCards()
-    //         } else {
-    //             if(that.tags == 0){
-    //                 that.newRecipes = that.recipes
-    //                 that.displayCards()
-    //             } else {
-    //                 that.newRecipes = that.recipes
-    //                 that.getNewRecipes()
-    //                 that.displayCards()
-    //             }
-    //         }
-    //     })
-    // }
+  
 
 
 
