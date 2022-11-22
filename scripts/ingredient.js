@@ -15,16 +15,18 @@ class Ingredient extends Dropdown {
         const ingreThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
+                const tagName = x.textContent.toLowerCase()
                 that.tabIdRecipes = this.dataset.id.split(',').map(x => parseInt(x))
-                that.tags.push(x.textContent)
-                tags.push(x.textContent)
-                const newTag = new Tag(x.textContent, 'Ingredients')
+                that.tags.push(tagName)
+                tags.push(tagName)
+                const newTag = new Tag(tagName, 'Ingredients')
                 newTag.displayTag()
                 newTag.removeTag(that)
                 ingreThis.closeDropdown()
                 that.showRecipes()
-                that.showIngredients(x.textContent)
-                that.showDevices(x.textContent)
+                that.showIngredients(tagName)
+                that.showDevices(tagName)
+                that.showTools(tagName)
                 //that.updateDatas()
             })
         })

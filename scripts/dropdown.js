@@ -23,14 +23,14 @@ class Dropdown {
                 idRecipes = this.that.toolsId;
                 break;
         }
-        for(let i=0; i<30; i++){
-            if(this.thing[i]){
+        for(let i=0; i<this.thing.length; i++){
+            
                 const p = document.createElement('button')
                 p.setAttribute('class', this.type)
                 p.setAttribute('data-id', idRecipes[i])
                 p.textContent = this.thing[i]
                 this.dropdown.appendChild(p)
-            }
+            
         }
     }
     events(that, tags){

@@ -39,6 +39,7 @@ class Index{
         this.recipesNodes = []
         this.ingredientsNodes = []
         this.devicesNodes = []
+        this.toolsNodes = []
 
     }
 
@@ -130,10 +131,9 @@ class Index{
 
     async showIngredients(tagName){
         this.dropdowns[0].childNodes.forEach(ingredient => {
-            console.log(this.tabIdRecipes)
-            console.log(ingredient.dataset.id)
-            console.log(this.tabIdRecipes.includes(parseInt(ingredient.dataset.id)))
-            if(this.tabIdRecipes.includes(parseInt(ingredient.dataset.id)) && ingredient.textContent !== tagName){
+            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
+            if(tab.length > 0 && ingredient.textContent !== tagName){
                 this.ingredientsNodes.push(ingredient)
             } else {
                 ingredient.classList.add('hidden')
@@ -143,10 +143,26 @@ class Index{
 
     async showDevices(tagName){
         this.dropdowns[1].childNodes.forEach(device => {
-            if(this.tabIdRecipes.includes(parseInt(device.dataset.id)) && device.textContent !== tagName){
+            const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
+            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
+            console.log(device.textContent)
+            if(tab.length > 0 && device.textContent !== tagName){
                 this.devicesNodes.push(device)
             } else {
                 device.classList.add('hidden')
+            }
+        })
+        console.log(this.devicesNodes)
+    }
+
+    async showTools(tagName){
+        this.dropdowns[2].childNodes.forEach(tool => {
+            const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
+            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
+            if(tab.length > 0 && tool.textContent !== tagName){
+                this.toolsNodes.push(tool)
+            } else {
+                tool.classList.add('hidden')
             }
         })
     }
