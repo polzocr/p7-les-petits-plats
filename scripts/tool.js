@@ -1,6 +1,6 @@
 class Tool extends Dropdown{
-    constructor(thing, value, type){
-        super(thing,value,type)
+    constructor(thing, value, type, that){
+        super(thing,value,type, that)
     }
 
     applyEvents(that, tags){

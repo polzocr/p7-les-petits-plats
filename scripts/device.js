@@ -1,6 +1,6 @@
 class Device extends Dropdown{
-    constructor(thing, value, type){
-        super(thing, value,type)
+    constructor(thing, value, type, that){
+        super(thing, value,type, that)
         // this.devices = devices
         // this.dropdown = document.querySelectorAll('.dropdown__all')[1]
         // this.dev = document.querySelector('#devices')

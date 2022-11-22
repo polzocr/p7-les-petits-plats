@@ -18,7 +18,7 @@ class Recipe {
             
         })
         
-        const article = `<article class="card">
+        const article = `<article class="card" data-id="${this.id}">
                             <div class="card__image">
                                 
                             </div>

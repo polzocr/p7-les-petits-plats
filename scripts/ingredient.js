@@ -1,6 +1,6 @@
 class Ingredient extends Dropdown {
-    constructor(thing, value, type){
-        super(thing, value,type)
+    constructor(thing, value, type, that){
+        super(thing, value,type, that)
         // //this.ingredients = ingredients
         // this.dropdown = document.querySelectorAll('.dropdown__all')[0]
         // this.ingre = document.querySelector('#Ingredients')
@@ -8,19 +8,22 @@ class Ingredient extends Dropdown {
         // // this.eventIngredientClose()
     }
 
+
     
 
     applyEvents(that, tags){
         const ingreThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
+                that.tabIdRecipes = this.dataset.id
                 that.tags.push(x.textContent)
                 tags.push(x.textContent)
                 const newTag = new Tag(x.textContent, 'Ingredients')
                 newTag.displayTag()
                 newTag.removeTag(that)
                 ingreThis.closeDropdown()
-                that.updateDatas()
+                that.showRecipes()
+                //that.updateDatas()
             })
         })
     }

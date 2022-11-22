@@ -1,8 +1,9 @@
 class Dropdown {
-    constructor(thing, value, type){
+    constructor(thing, value, type, that){
         this.thing = thing
         this.value = value
         this.type = type
+        this.that = that
         this.dropdown = document.querySelectorAll('.dropdown__all')[value]
         this.ingre = document.querySelector('#'+type)
         this.eventOpen()
@@ -10,10 +11,23 @@ class Dropdown {
     }
 
     createTemplate(){
+        let idRecipes;
+        switch(this.type){
+            case 'Ingredients':
+                idRecipes = this.that.ingredientsId;
+                break;
+            case 'Appareils':
+                idRecipes = this.that.devicesId;
+                break;
+            case 'Ustensiles':
+                idRecipes = this.that.toolsId;
+                break;
+        }
         for(let i=0; i<30; i++){
             if(this.thing[i]){
                 const p = document.createElement('button')
                 p.setAttribute('class', this.type)
+                p.setAttribute('data-id', idRecipes[i])
                 p.textContent = this.thing[i]
                 this.dropdown.appendChild(p)
             }
