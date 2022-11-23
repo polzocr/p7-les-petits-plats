@@ -4,17 +4,17 @@ class Tool extends Dropdown{
     }
 
     applyEvents(that, tags){
-        const ingreThis = this
+        const toolThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
                 const tagName = x.textContent.toLowerCase()
-                that.tabIdRecipes = this.dataset.id.split(',').map(x => parseInt(x))
+                toolThis.getIdRecipes(that, this)
                 that.tags.push(tagName)
                 tags.push(tagName)
                 const newTag = new Tag(tagName, 'Ustensiles')
                 newTag.displayTag()
                 newTag.removeTag(that)
-                ingreThis.closeDropdown()
+                toolThis.closeDropdown()
                 that.showRecipes()
                 that.showIngredients(tagName)
                 that.showDevices(tagName)
@@ -22,4 +22,13 @@ class Tool extends Dropdown{
             })
         })
     }
+    getIdRecipes(that, thisEvent){
+        if(that.tabIdRecipes == 0){
+            that.tabIdRecipes = thisEvent.dataset.id.split(',').map(x => parseInt(x))
+        } else {
+            const tab = thisEvent.dataset.id.split(',').map(x => parseInt(x))
+            that.tabIdRecipes = tab.filter(id => that.tabIdRecipes.includes(id))
+        }
+    }
 }
+

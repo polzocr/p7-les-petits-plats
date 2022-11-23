@@ -120,51 +120,103 @@ class Index{
     }
 
     async showRecipes(){
-        this.section.childNodes.forEach(sec => {
-            if(this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
-                this.recipesNodes.push(sec)
-            } else {
-                sec.classList.add('hidden')
-            }
-        })
+        if(this.recipesNodes == 0){
+            this.section.childNodes.forEach(sec => {
+                if(this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
+                    this.recipesNodes.push(sec)
+                } else {
+                    sec.classList.add('hidden')
+                }
+            })
+        } else {
+            const temporaryNodes = []
+            this.recipesNodes.forEach(recipe => {
+                if(this.tabIdRecipes.includes(parseInt(recipe.dataset.id))){
+                    temporaryNodes.push(recipe)
+                } else {
+                    recipe.classList.add('hidden')
+                }
+            })
+            this.recipesNodes = temporaryNodes
+        }
     }
 
     async showIngredients(tagName){
-        this.dropdowns[0].childNodes.forEach(ingredient => {
-            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
-            if(tab.length > 0 && ingredient.textContent !== tagName){
-                this.ingredientsNodes.push(ingredient)
-            } else {
-                ingredient.classList.add('hidden')
-            }
-        })
+        if(this.ingredientsNodes == 0) {
+            this.dropdowns[0].childNodes.forEach(ingredient => {
+                const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && ingredient.textContent.toLowerCase() !== tagName){
+                    this.ingredientsNodes.push(ingredient)
+                } else {
+                    ingredient.classList.add('hidden')
+                }
+            })
+        } else {
+            const temporaryNodes = []
+            this.ingredientsNodes.forEach(ingredient => {
+                const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && ingredient.textContent.toLowerCase() !== tagName){
+                    temporaryNodes.push(ingredient)
+                } else {
+                    ingredient.classList.add('hidden')
+                }
+            })
+            this.ingredientsNodes = temporaryNodes
+        }
     }
 
     async showDevices(tagName){
-        this.dropdowns[1].childNodes.forEach(device => {
-            const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
-            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
-            console.log(device.textContent)
-            if(tab.length > 0 && device.textContent !== tagName){
-                this.devicesNodes.push(device)
-            } else {
-                device.classList.add('hidden')
-            }
-        })
-        console.log(this.devicesNodes)
+        if(this.devicesNodes == 0){
+            this.dropdowns[1].childNodes.forEach(device => {
+                const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && device.textContent.toLowerCase() !== tagName){
+                    this.devicesNodes.push(device)
+                } else {
+                    device.classList.add('hidden')
+                }
+            })
+        } else {
+            const temporaryNodes = []
+            this.devicesNodes.forEach(device => {
+                const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && device.textContent.toLowerCase() !== tagName){
+                    temporaryNodes.push(device)
+                } else {
+                    device.classList.add('hidden')
+                }
+            })
+            this.devicesNodes = temporaryNodes
+        }
     }
 
     async showTools(tagName){
-        this.dropdowns[2].childNodes.forEach(tool => {
-            const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
-            const tab = this.tabIdRecipes.filter(id => datasetId.includes(id))
-            if(tab.length > 0 && tool.textContent !== tagName){
-                this.toolsNodes.push(tool)
-            } else {
-                tool.classList.add('hidden')
-            }
-        })
+        if(this.toolsNodes == 0){
+            this.dropdowns[2].childNodes.forEach(tool => {
+                const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && tool.textContent.toLowerCase() !== tagName){
+                    this.toolsNodes.push(tool)
+                } else {
+                    tool.classList.add('hidden')
+                }
+            })
+        } else {
+            const temporaryNodes = []
+            this.toolsNodes.forEach(tool => {
+                const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                if(tab.length > 0 && tool.textContent.toLowerCase() !== tagName){
+                    temporaryNodes.push(tool)
+                } else {
+                    tool.classList.add('hidden')
+                }
+            })
+            this.toolsNodes = temporaryNodes
+        }
     }
 
 

@@ -51,9 +51,10 @@ class Api {
         this.recipes.forEach((recipe,index) => {
             let string = ""
             recipe.ingredients.forEach(ingredient => {
-                string += ingredient.ingredient.toLowerCase() + ' '
-                objectIngredients[ingredient.ingredient] = objectIngredients[ingredient.ingredient] ? `${objectIngredients[ingredient.ingredient]}, ${index + 1}` : `${index + 1}` 
-                recipeIng.push(ingredient.ingredient)
+                const lowerIngredients = ingredient.ingredient.toLowerCase()
+                string += lowerIngredients + ' '
+                objectIngredients[lowerIngredients] = objectIngredients[lowerIngredients] ? `${objectIngredients[lowerIngredients]}, ${index + 1}` : `${index + 1}` 
+                recipeIng.push(lowerIngredients)
             })
             this.ingredientsObject.push(string)
         })
@@ -69,9 +70,10 @@ class Api {
         const recipeDevices = []
         const objectDevices = {}
         this.recipes.forEach((recipe, index) => {
-            this.devicesObject.push(recipe.appliance.toLowerCase())
-            objectDevices[recipe.appliance] = objectDevices[recipe.appliance] ? `${objectDevices[recipe.appliance]}, ${index + 1}` : `${index + 1}`
-            recipeDevices.push(recipe.appliance.toLowerCase())
+            const lowerAppliance = recipe.appliance.toLowerCase()
+            this.devicesObject.push(lowerAppliance)
+            objectDevices[lowerAppliance] = objectDevices[lowerAppliance] ? `${objectDevices[lowerAppliance]}, ${index + 1}` : `${index + 1}`
+            recipeDevices.push(lowerAppliance)
         })
         this.devices = [...new Set(recipeDevices)]
         const allKeys = Object.keys(objectDevices)
@@ -88,8 +90,9 @@ class Api {
         this.recipes.forEach((recipe,index) => {
             this.toolsObject.push(recipe.ustensils.join(' ').toLowerCase())
             recipe.ustensils.forEach(ustensil => {
-                objectTools[ustensil] = objectTools[ustensil] ? `${objectTools[ustensil]}, ${index + 1}` : `${index + 1}`
-                recipeTools.push(ustensil)
+                const lowerUstensil = ustensil.toLowerCase()
+                objectTools[lowerUstensil] = objectTools[lowerUstensil] ? `${objectTools[lowerUstensil]}, ${index + 1}` : `${index + 1}`
+                recipeTools.push(lowerUstensil)
             })
         })
         this.tools = [...new Set(recipeTools)]
