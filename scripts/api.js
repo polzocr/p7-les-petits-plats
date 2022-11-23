@@ -95,6 +95,7 @@ class Api {
                 recipeTools.push(lowerUstensil)
             })
         })
+        console.log(objectTools)
         this.tools = [...new Set(recipeTools)]
         const allKeys = Object.keys(objectTools)
         this.toolsId = allKeys.map(key => objectTools[key])

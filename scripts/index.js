@@ -73,7 +73,7 @@ class Index{
 
 
 
-    async displayRecipes(recipes){
+    async createRecipes(recipes){
         this.section.innerHTML =  null
         recipes.forEach(recipe => {
             const card = new Recipe(recipe)
@@ -84,7 +84,7 @@ class Index{
 
 
 
-    async displayIngredients(ingredients){
+    async createIngredients(ingredients){
         document.querySelectorAll('.dropdown__all')[0].innerHTML = null
         const dropIng = new Ingredient(ingredients ,0, 'Ingredients' , this)
         dropIng.createTemplate()
@@ -93,7 +93,7 @@ class Index{
 
 
 
-    async displayDevices(devices){
+    async createDevices(devices){
         document.querySelectorAll('.dropdown__all')[1].innerHTML = null
         const dropDev = new Device(devices,1, 'Appareils', this)
         dropDev.createTemplate()
@@ -102,7 +102,7 @@ class Index{
 
 
 
-    async displayTools(tools){
+    async createTools(tools){
         document.querySelectorAll('.dropdown__all')[2].innerHTML = null
         const dropTool = new Tool(tools, 2, 'Ustensiles', this)
         dropTool.createTemplate()
@@ -112,17 +112,18 @@ class Index{
     
 
 
-    async displayDatas(){
-        this.displayRecipes(this.recipes)
-        this.displayIngredients(this.ingredients)
-        this.displayDevices(this.devices)
-        this.displayTools(this.tools)
+    async createDatas(){
+        this.createRecipes(this.recipes)
+        this.createIngredients(this.ingredients)
+        this.createDevices(this.devices)
+        this.createTools(this.tools)
     }
 
     async showRecipes(){
         if(this.recipesNodes == 0){
             this.section.childNodes.forEach(sec => {
                 if(this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
+                    sec.classList.remove('hidden')
                     this.recipesNodes.push(sec)
                 } else {
                     sec.classList.add('hidden')
@@ -147,6 +148,7 @@ class Index{
                 const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
                 const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
                 if(tab.length > 0 && ingredient.textContent.toLowerCase() !== tagName){
+                    //ingredient.classList.remove('hidden')
                     this.ingredientsNodes.push(ingredient)
                 } else {
                     ingredient.classList.add('hidden')
@@ -173,6 +175,7 @@ class Index{
                 const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
                 const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
                 if(tab.length > 0 && device.textContent.toLowerCase() !== tagName){
+                    //device.classList.remove('hidden')
                     this.devicesNodes.push(device)
                 } else {
                     device.classList.add('hidden')
@@ -199,6 +202,7 @@ class Index{
                 const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
                 const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
                 if(tab.length > 0 && tool.textContent.toLowerCase() !== tagName){
+                    //tool.classList.remove('hidden')
                     this.toolsNodes.push(tool)
                 } else {
                     tool.classList.add('hidden')
@@ -219,18 +223,58 @@ class Index{
         }
     }
 
+    async removeTags(){
+        this.tabIdRecipes = []
+        const tags = document.querySelectorAll('.tag')
+        this.showEverything()
+        this.resetNodes()
+        if(tags.length > 0){
+            tags.forEach((tag,index) => {
+                const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
+                if(index == 0){
+                    this.tabIdRecipes = datasetId
+                } else {
+                    this.tabIdRecipes = datasetId.filter(id => this.tabIdRecipes.includes(id))
+                }
+                
+                this.showDatas(tag.firstChild.textContent)
+            })
+        }
+    }
+
+    async showEverything(){
+        this.section.childNodes.forEach(recipe => {
+            recipe.classList.remove('hidden')
+        })
+        this.dropdowns[0].childNodes.forEach(ingredient => {
+            ingredient.classList.remove('hidden')
+        })
+        this.dropdowns[1].childNodes.forEach(device => {
+            device.classList.remove('hidden')
+        })
+        this.dropdowns[2].childNodes.forEach(tool => {
+            tool.classList.remove('hidden')
+        })
+    }
+
+    async resetNodes(){
+        this.recipesNodes = []
+        this.ingredientsNodes = []
+        this.devicesNodes = []
+        this.toolsNodes = []
+    }
 
 
-    
-
-
-    
-
-
+    async showDatas(tagName){
+        this.showRecipes()
+        this.showIngredients(tagName)
+        this.showDevices(tagName)
+        this.showTools(tagName)
+    }
 
     async main(){
         await this.fetchData()
-        this.displayDatas()
+        this.createDatas()
         
     }
 

@@ -4,7 +4,7 @@ class Tag{
         this.type = type
     }
 
-    displayTag(){
+    displayTag(dataId){
         // const element = `<div class="tag ${this.type}">
         //                     <p>${this.name}</p>
         //                     <button class="${this.type}"><span>+</span></button>
@@ -13,6 +13,7 @@ class Tag{
         const divTag = document.createElement('div')
         divTag.setAttribute('class', 'tag')
         divTag.classList.add(this.type)
+        divTag.setAttribute('data-id', dataId)
         const p = document.createElement('p')
         p.textContent = this.name
         const button = document.createElement('button')
@@ -33,14 +34,8 @@ class Tag{
         tags.forEach(tag => {
             tag.nextElementSibling.addEventListener('click', function(e){
                 this.parentElement.remove()
-                thisTag.rebuildDatas(that)
-                that.updateDatas()
+                that.removeTags()
             })
         })
-    }
-
-    rebuildDatas(that){
-        that.resetDatas()
-        that.resetTags(this.name)
     }
 }
