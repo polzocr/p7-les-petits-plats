@@ -289,11 +289,11 @@ class Index{
             if(query.length > 2){
                 const tabQuery = []
                 if(that.recipesNodes.length > 0){
-                    // that.tabIdRecipes.forEach(id => {
-                    //     if(that.recipesQuery[id-1].includes(query)){
-                    //         tabQuery.push(id)
-                    //     }
-                    // })
+                    that.tabIdRecipes.forEach(id => {
+                        if(that.recipesQuery[id-1].includes(query)){
+                            tabQuery.push(id)
+                        }
+                    })
                     // that.recipesNodes.forEach(node => {
                     //     tabQuery.includes(parseInt(node.dataset.id)) ? node.classList.remove('hidden-query'): node.classList.add('hidden-query')
                     // })
@@ -312,11 +312,6 @@ class Index{
                     //     const tab = datasetId.filter(id => tabQuery.includes(id))
                     //     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
                     // })
-                    that.recipesQuery.forEach((recipe, index) => {
-                        if(recipe.includes(query)){
-                            tabQuery.push(index + 1)
-                        }
-                    })
                     that.section.childNodes.forEach(sec => {
                     tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
                     })
