@@ -15,7 +15,6 @@ class Api {
         this.toolsObject = []
         this.toolsId = []
 
-        this.recipesTags = []
         this.recipesQuery = []
 
     }
@@ -33,16 +32,8 @@ class Api {
     async RecipesQuery(){
         this.recipes.forEach((recipe,index) => {
             this.recipesQuery.push(this.ingredientsObject[index] + ' ' +  recipe.name.toLowerCase() + ' ' +  recipe.description.toLowerCase())
-            this.recipesTags.push(this.ingredientsObject[index] + ' ' +  this.devicesObject[index] + ' '  + this.toolsObject[index])
         })
-        return [this.recipesQuery, this.recipesTags]
-    }
-
-    async getRecipesTags(){
-        this.recipes.forEach(recipe => {
-            let string = '';
-            
-        })
+        return [this.recipesQuery]
     }
 
     async getIngredients(){

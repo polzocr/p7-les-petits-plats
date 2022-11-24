@@ -23,6 +23,7 @@ class Device extends Dropdown{
             })
         })
     }
+    
 
     getIdRecipes(that, thisEvent){
         if(that.tabIdRecipes == 0){
