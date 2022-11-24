@@ -29,7 +29,6 @@ class Tag{
     }
 
     removeTag(that){
-        const thisTag = this
         const tags = document.querySelectorAll('#tags .tag p')
         tags.forEach(tag => {
             tag.nextElementSibling.addEventListener('click', function(e){

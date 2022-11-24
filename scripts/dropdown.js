@@ -33,8 +33,8 @@ class Dropdown {
             
         }
     }
-    events(that, tags){
-        return this.applyEvents(that, tags)
+    events(that){
+        return this.applyEvents(that)
     }
 
     eventOpen(){

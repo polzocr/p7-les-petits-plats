@@ -9,14 +9,12 @@ class Device extends Dropdown{
     }
 
   
-    applyEvents(that, tags){
+    applyEvents(that){
         const devThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
                 const tagName = x.textContent.toLowerCase()
                 devThis.getIdRecipes(that, this)
-                that.tags.push(tagName)
-                tags.push(tagName)
                 const newTag = new Tag(tagName, 'Appareils')
                 newTag.displayTag(this.dataset.id)
                 newTag.removeTag(that)

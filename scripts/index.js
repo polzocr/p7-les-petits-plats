@@ -2,19 +2,12 @@ class Index{
     constructor(){
         this.api = new Api('../data/recipe.json') //data appelées ici
         this.recipes = [] 
-        this.newRecipes = [] 
         this.section = document.getElementById('cards')
         this.dropdowns =  document.querySelectorAll('.dropdown__all')
         this.ingredients = []
-        this.newIngredients = []
         this.devices = []
-        this.newDevices = []
         this.tools = []
-        this.newTools = []
-        this.tagsIng = []
-        this.tagsDev = []
-        this.tagsTool = []
-        this.tags = []
+        
         
         this.queryRecipes = []
         this.queryIngredients = []
@@ -48,7 +41,6 @@ class Index{
 
     async fetchData(){
         this.recipes = await this.api.getRecipes()
-        this.newRecipes = this.recipes
         
         const apiIngredients = await this.api.getIngredients()
         this.ingredients = apiIngredients[0]
@@ -240,8 +232,9 @@ class Index{
                 }
                 this.showDatas(tag.firstChild.textContent)
             })
-        }
-        
+        } else {
+
+        }      
     }
 
     async showEverything(){
@@ -357,10 +350,10 @@ class Index{
                 }
             } else {
                 if(that.recipesNodes.length > 0){
-                    that.recipesNodes.forEach(node => node.classList.remove('hidden-query'))
-                    that.ingredientsNodes.forEach(node => node.classList.remove('hidden-query'))
-                    that.devicesNodes.forEach(node => node.classList.remove('hidden-query'))
-                    that.toolsNodes.forEach(node => node.classList.remove('hidden-query'))
+                    that.section.childNodes.forEach(sec => sec.classList.remove('hidden-query'))
+                    that.dropdowns[0].childNodes.forEach(node => node.classList.remove('hidden-query'))
+                    that.dropdowns[1].childNodes.forEach(node => node.classList.remove('hidden-query'))
+                    that.dropdowns[2].childNodes.forEach(node => node.classList.remove('hidden-query'))
                 } else {
                      that.section.childNodes.forEach(sec => sec.classList.remove('hidden-query'))
                      that.dropdowns[0].childNodes.forEach(node => node.classList.remove('hidden-query'))
@@ -405,175 +398,6 @@ class Index{
 const rec = new Index()
 rec.main()
 
-
-
-
-    // async search(){
-    //     this.eventRecipes()
-    //     this.eventIngredients()
-    //     this.eventDevices()
-    //     this.eventTools()
-    // }
-
-
-    // async resetDatas(){
-    //     this.newRecipes = this.recipes
-    //     this.newIngredients = this.ingredients
-    //     this.newDevices = this.devices
-    //     this.newTools = this.tools
-    // }
-
-    // async resetTags(name){
-    //     this.tagsIng = this.tagsIng.filter(tag => tag !== name)
-    //     this.tagsDev = this.tagsDev.filter(tag => tag !== name)
-    //     this.tagsTool = this.tagsTool.filter(tag => tag !== name)
-    //     this.tags = this.tags.filter(tag => tag !== name)
-    // }
-
-    // async updateDatas(){
-    //     this.getNewRecipes()
-    //     this.displayRecipes(this.newRecipes)
-    //     this.getNewIngredients()
-    //     this.displayIngredients(this.newIngredients)
-    //     this.getNewDevices()
-    //     this.displayDevices(this.newDevices)
-    //     this.getNewTools()
-    //     this.displayTools(this.newTools)
-    // }
-
-    // async getNewRecipes(){
-    //     if(this.tagsIng.length > 0){
-    //         this.tagsIng.forEach(tag => {
-    //             this.newRecipes = this.newRecipes.filter(recipe =>  recipe.ingredients.some(ing => ing.ingredient == tag ) == true)
-    //         })
-    //     }
-    //     if(this.tagsDev.length > 0){
-    //         this.tagsDev.forEach(tag => {
-    //             this.newRecipes = this.newRecipes.filter(recipe => recipe.appliance == tag)
-    //         })
-    //     } 
-    //     if(this.tagsTool.length > 0){
-    //         this.tagsTool.forEach(tag => {
-    //             this.newRecipes = this.newRecipes.filter(recipe => recipe.ustensils.some(ust => ust == tag) == true)
-    //         })
-    //     }
-    // }
-
-    //     async getNewDevices(){
-    //     const recipeDevices = []
-    //     this.newRecipes.forEach(recipe => {
-    //         recipeDevices.push(recipe.appliance)
-    //     })
-    //     this.newDevices =  [...new Set(recipeDevices)]
-    // }
-    // async getNewTools(){
-    //     const recipeTools = []
-    //     this.newRecipes.forEach(recipe => {
-    //         recipe.ustensils.forEach(ustensil => recipeTools.push(ustensil))
-    //     })
-    //     this.newTools = [...new Set(recipeTools)]
-    // }
-
-      // async getNewIngredients(){
-    //     const recipeIng = []
-    //     this.newRecipes.forEach(recipe => {
-    //         recipe.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient))
-    //     })
-    //     this.newIngredients =  [...new Set(recipeIng)]
-    // }
-
-    // async searchIng(query){
-    //     const search = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    //     this.queryIngredients = [...new Set(search)]
-    // }
-
-    // async eventIngredients(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.searchIng(query)
-    //             that.displayIngredients(that.queryIngredients)
-    //         } else {
-    //             if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-    //                 that.displayIngredients(that.ingredients)
-    //             } else {
-    //                 that.displayIngredients(that.newIngredients)
-    //             }
-                
-    //         }
-    //     })
-    // }
-
-    // async searchDev(query){
-    //     const search = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    //     this.queryDevices = [...new Set(search)]
-    // }
-
-    // async eventDevices(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.searchDev(query)
-    //             that.displayDevices(that.queryDevices)
-    //         } else {
-    //             if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-    //                 that.displayDevices(that.devices)
-    //             } else {
-    //                 that.displayDevices(that.newDevices)
-    //             }
-                
-    //         }
-    //     })
-    // }
-
-    // async searchTool(query){
-    //     const search = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-    //     this.queryTools = [...new Set(search)]
-    // }
-
-    // async eventTools(){
-    //     const that = this;
-    //     document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.searchTool(query)
-    //             that.displayTools(that.queryTools)
-    //         } else {
-    //             if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-    //                 that.displayTools(that.tools)
-    //             } else {
-    //                 that.displayTools(that.newTools)
-    //             }
-                
-    //         }
-    //     })
-    // }
-
-    // async searchRecipes(query){
-    //     this.queryRecipes = this.newRecipes.filter(recipe => {
-    //         return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
-    //     })
-    // }
-
-    // async eventRecipes(){
-    //     const that = this;
-    //     document.querySelector('#Recherche').addEventListener('input', function(e){
-    //         const query = this.value
-    //         if(query.length > 2){
-    //             that.searchRecipes(query)
-    //             that.displayRecipes(that.queryRecipes)
-    //         } else {
-    //             if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-    //                 that.displayRecipes(that.recipes)
-    //             } else {
-    //                 that.displayRecipes(that.newRecipes)
-    //             }
-                
-    //         }
-    //     })
-    // }
 
     
 

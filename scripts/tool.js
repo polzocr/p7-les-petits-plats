@@ -3,14 +3,12 @@ class Tool extends Dropdown{
         super(thing,value,type, that)
     }
 
-    applyEvents(that, tags){
+    applyEvents(that){
         const toolThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
                 const tagName = x.textContent.toLowerCase()
                 toolThis.getIdRecipes(that, this)
-                that.tags.push(tagName)
-                tags.push(tagName)
                 const newTag = new Tag(tagName, 'Ustensiles')
                 newTag.displayTag(this.dataset.id)
                 newTag.removeTag(that)
