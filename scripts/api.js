@@ -32,7 +32,7 @@ class Api {
 
     async RecipesQuery(){
         this.recipes.forEach((recipe,index) => {
-            this.recipesQuery.push(this.ingredientsObject[index] + ' ' +  recipe.name + ' ' +  recipe.description)
+            this.recipesQuery.push(this.ingredientsObject[index] + ' ' +  recipe.name.toLowerCase() + ' ' +  recipe.description.toLowerCase())
             this.recipesTags.push(this.ingredientsObject[index] + ' ' +  this.devicesObject[index] + ' '  + this.toolsObject[index])
         })
         return [this.recipesQuery, this.recipesTags]
@@ -95,7 +95,6 @@ class Api {
                 recipeTools.push(lowerUstensil)
             })
         })
-        console.log(objectTools)
         this.tools = [...new Set(recipeTools)]
         const allKeys = Object.keys(objectTools)
         this.toolsId = allKeys.map(key => objectTools[key])

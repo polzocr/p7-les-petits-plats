@@ -2,6 +2,14 @@
   display: none !important;
 }
 
+.hidden-query {
+  display: none !important;
+}
+
+.hidden-tag {
+  display: none !important;
+}
+
 body {
   font-family: "DM Sans", sans-serif;
   box-sizing: border-box;
