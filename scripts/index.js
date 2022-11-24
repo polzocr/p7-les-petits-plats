@@ -226,7 +226,6 @@ class Index{
     }
 
     async removeTags(){
-        console.log(this.tabIdRecipes)
         this.tabIdRecipes = []
         const tags = document.querySelectorAll('.tag')
         this.showEverything()
@@ -397,7 +396,6 @@ class Index{
         this.showIngredients(tagName)
         this.showDevices(tagName)
         this.showTools(tagName)
-        console.log(this.tabIdRecipes)
     }
 
     async main(){
