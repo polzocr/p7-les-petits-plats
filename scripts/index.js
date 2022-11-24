@@ -97,114 +97,48 @@ class Index{
     }
 
     showRecipes(){
-        if(this.recipesNodes == 0){
-            this.section.childNodes.forEach(sec => {
-                if(this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
-                    sec.classList.remove('hidden')
-                    this.recipesNodes.push(sec)
-                } else {
-                    sec.classList.add('hidden')
-                }
-            })
-        } else {
-            const temporaryNodes = []
-            this.recipesNodes.forEach(recipe => {
-                if(this.tabIdRecipes.includes(parseInt(recipe.dataset.id))){
-                    temporaryNodes.push(recipe)
-                } else {
-                    recipe.classList.add('hidden')
-                }
-            })
-            this.recipesNodes = temporaryNodes
-        }
+        this.section.childNodes.forEach(sec => {
+            if(!this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
+                sec.classList.add('hidden')
+            }
+        })
     }
 
     showIngredients(tagName){
-        if(this.ingredientsNodes == 0) {
-            this.dropdowns[0].childNodes.forEach(ingredient => {
-                const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && ingredient.textContent.toLowerCase() !== tagName){
-                    //ingredient.classList.remove('hidden')
-                    this.ingredientsNodes.push(ingredient)
-                } else {
-                    ingredient.classList.add('hidden')
-                }
-            })
-        } else {
-            const temporaryNodes = []
-            this.ingredientsNodes.forEach(ingredient => {
-                const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && ingredient.textContent.toLowerCase() !== tagName){
-                    temporaryNodes.push(ingredient)
-                } else {
-                    ingredient.classList.add('hidden')
-                }
-            })
-            this.ingredientsNodes = temporaryNodes
-        }
+        this.dropdowns[0].childNodes.forEach(ingredient => {
+            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+            if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
+                ingredient.classList.add('hidden')
+            } 
+        })
     }
+    
 
     showDevices(tagName){
-        if(this.devicesNodes == 0){
-            this.dropdowns[1].childNodes.forEach(device => {
-                const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && device.textContent.toLowerCase() !== tagName){
-                    //device.classList.remove('hidden')
-                    this.devicesNodes.push(device)
-                } else {
-                    device.classList.add('hidden')
-                }
-            })
-        } else {
-            const temporaryNodes = []
-            this.devicesNodes.forEach(device => {
-                const datasetId = device.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && device.textContent.toLowerCase() !== tagName){
-                    temporaryNodes.push(device)
-                } else {
-                    device.classList.add('hidden')
-                }
-            })
-            this.devicesNodes = temporaryNodes
-        }
+        this.dropdowns[1].childNodes.forEach(ingredient => {
+            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+            if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
+                ingredient.classList.add('hidden')
+            } 
+        })
     }
 
     showTools(tagName){
-        if(this.toolsNodes == 0){
-            this.dropdowns[2].childNodes.forEach(tool => {
-                const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && tool.textContent.toLowerCase() !== tagName){
-                    //tool.classList.remove('hidden')
-                    this.toolsNodes.push(tool)
-                } else {
-                    tool.classList.add('hidden')
-                }
-            })
-        } else {
-            const temporaryNodes = []
-            this.toolsNodes.forEach(tool => {
-                const datasetId = tool.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-                if(tab.length > 0 && tool.textContent.toLowerCase() !== tagName){
-                    temporaryNodes.push(tool)
-                } else {
-                    tool.classList.add('hidden')
-                }
-            })
-            this.toolsNodes = temporaryNodes
-        }
+        this.dropdowns[2].childNodes.forEach(ingredient => {
+            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
+            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+            if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
+                ingredient.classList.add('hidden')
+            } 
+        })
     }
 
     removeTags(){
         this.tabIdRecipes = []
         const tags = document.querySelectorAll('.tag')
         this.showEverything()
-        this.resetNodes()
         if(tags.length > 0){
             tags.forEach((tag,index) => {
                 const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
@@ -215,9 +149,8 @@ class Index{
                 }
                 this.showDatas(tag.firstChild.textContent)
             })
-        } else {
-
-        }      
+        }    
+        console.log(this.tabIdRecipes) 
     }
 
     showEverything(){
@@ -242,18 +175,9 @@ class Index{
             element == 'Ingredients' ? nodes = that.ingredientsNodes : element == 'Appareils' ? nodes = that.devicesNodes : nodes = that.toolsNodes
             const query = this.value.trim().toLowerCase()
             if(query.length > 2){
-                if(nodes.length > 0){
-                    nodes.forEach(node => !node.textContent.includes(query)? node.classList.add('hidden-tag') : node.classList.remove('hidden-tag'))
-                } else {
-                    dropdown.childNodes.forEach(node => !node.textContent.includes(query) ? node.classList.add('hidden-tag'): node.classList.remove('hidden-tag'))
-                }
-                
+                dropdown.childNodes.forEach(node => !node.textContent.includes(query)? node.classList.add('hidden-query-tag') : node.classList.remove('hidden-query-tag'))
             } else {
-               if(nodes.length > 0){
-                nodes.forEach(node => node.classList.remove('hidden-tag'))
-               } else {
-                dropdown.childNodes.forEach(node => node.classList.remove('hidden-tag'))
-               }
+                dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
             }
         })
     }
@@ -264,21 +188,13 @@ class Index{
         const query = this.value.trim().toLowerCase()
             if(query.length > 2){
                 const tabQuery = []
-                if(that.recipesNodes.length > 0){
-                    that.tabIdRecipes.forEach(id => {
-                        if(that.recipesQuery[id-1].includes(query)){
-                            tabQuery.push(id)
-                        }
-                    })
-                } else {
-                    that.recipesQuery.forEach((recipe, index) => {
-                        if(recipe.includes(query)){
-                            tabQuery.push(index + 1)
-                        }
-                    })
-                }
+                that.recipesQuery.forEach((recipe, index) => {
+                    if(recipe.includes(query)){
+                        tabQuery.push(index + 1)
+                    }
+                })
                 that.section.childNodes.forEach(sec => {
-                tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
+                    tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
                 })
                 that.dropdowns[0].childNodes.forEach(node => {
                     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
