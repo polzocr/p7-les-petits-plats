@@ -102,8 +102,8 @@ class Index{
 
     //filtre les differents id des ingredients par rapports aux id des recettes
     //et retourne un tableau 
-    getFilterIdRecipes(node){
-        const datasetId = node.dataset.id.split(',').map(id => parseInt(id))//recupération des data-id
+    getFilterIdRecipes(element){
+        const datasetId = element.dataset.id.split(',').map(id => parseInt(id))//recupération des data-id
         const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))//filter avec les id des recttes
         return tab
     }
@@ -190,10 +190,10 @@ class Index{
     }
 
     //enleve les classes qui cachent les elements
-    removeHidden(node){
-        node.classList.remove('hidden')
-        node.classList.remove('hidden-query-tag')
-        node.classList.remove('hidden-query')
+    removeHidden(element){
+        element.classList.remove('hidden')
+        element.classList.remove('hidden-query-tag')
+        element.classList.remove('hidden-query')
     }
 
     //affichages de toutes les datas
@@ -219,6 +219,7 @@ class Index{
     s'il n'y a pas de resultat à la recherche, on affiche un message d'erreur
     */
     eventsInput(element, dropdown){
+        console.log(dropdown)
         const that = this
         document.querySelector('.dropdown__search.'+ element).addEventListener('input', function(e){
             const query = this.value.trim().toLowerCase()
@@ -252,6 +253,7 @@ class Index{
                 const noElement = document.getElementById('no-element')
                 noElement ? noElement.remove():0 //supprime le message 'Aucun filtre'
                 //reaffiche les tags cachés par la recherche
+                console.log(dropdown)
                 dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
             }
             
