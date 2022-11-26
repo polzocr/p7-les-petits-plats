@@ -69,6 +69,7 @@ class Dropdown {
     }
 
     closeDropdown(){
+        this.dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
         this.ingre.value = this.type
         this.ingre.setAttribute('value', this.type)
         this.ingre.nextElementSibling.classList.remove('show')
