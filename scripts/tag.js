@@ -16,7 +16,7 @@ class Tag{
         divTag.setAttribute('data-id', dataId)
         const p = document.createElement('p')
         p.textContent = this.name
-        const button = document.createElement('button')
+        const button = document.createElement('a')
         button.setAttribute('class', this.type)
         const span = document.createElement('span')
         span.textContent = '+'

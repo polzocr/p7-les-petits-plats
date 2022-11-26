@@ -56,7 +56,7 @@ h1 {
 }
 
 .tag {
-  width: 107px;
+  width: 110px;
   height: 37px;
   border-radius: 3px;
   display: flex;
@@ -68,7 +68,7 @@ h1 {
   font-size: 14px;
   font-weight: 700;
 }
-.tag button {
+.tag a {
   color: white;
   border: 2px solid white;
   width: 20px;
@@ -79,10 +79,10 @@ h1 {
   align-items: center;
   transform: rotate(45deg);
 }
-.tag button:hover {
+.tag a:hover {
   cursor: pointer;
 }
-.tag button span {
+.tag a span {
   font-size: 18px;
   font-weight: 500;
 }

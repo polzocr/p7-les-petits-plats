@@ -150,7 +150,6 @@ class Index{
                 this.showDatas(tag.firstChild.textContent)
             })
         }    
-        console.log(this.tabIdRecipes) 
     }
 
     showEverything(){
@@ -171,8 +170,6 @@ class Index{
     eventsInput(element, dropdown){
         const that = this
         document.querySelector('.dropdown__search.'+ element).addEventListener('input', function(e){
-            let nodes; 
-            element == 'Ingredients' ? nodes = that.ingredientsNodes : element == 'Appareils' ? nodes = that.devicesNodes : nodes = that.toolsNodes
             const query = this.value.trim().toLowerCase()
             if(query.length > 2){
                 dropdown.childNodes.forEach(node => !node.textContent.includes(query)? node.classList.add('hidden-query-tag') : node.classList.remove('hidden-query-tag'))
@@ -225,13 +222,6 @@ class Index{
         this.eventsInput('Ingredients', this.dropdowns[0])
         this.eventsInput('Appareils', this.dropdowns[1])
         this.eventsInput('Ustensiles', this.dropdowns[2])
-    }
-
-    resetNodes(){
-        this.recipesNodes = []
-        this.ingredientsNodes = []
-        this.devicesNodes = []
-        this.toolsNodes = []
     }
 
 

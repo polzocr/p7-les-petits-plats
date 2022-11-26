@@ -40,7 +40,13 @@ class Dropdown {
     eventOpen(){
         const that = this
         this.ingre.addEventListener('click', function(e){
+            const placeholder = this.placeholder
+            if(this.value == 'Ingredients' || this.value =='Appareils' || this.value == 'Ustensiles'){
+                this.value = ''
+            }
+            
             this.removeAttribute('value')
+            this.setAttribute('placeholder', placeholder)
             this.nextElementSibling.classList.add('show')
             this.nextElementSibling.classList.add(that.type)
         })
@@ -49,22 +55,25 @@ class Dropdown {
     eventClose(){
         const that = this
         this.ingre.addEventListener('blur', function(e){
-            if(e.relatedTarget == null){
+            console.log(e.relatedTarget)
+            if(!e.relatedTarget || e.relatedTarget.tagName !== 'BUTTON'){
+                if(this.value == '') {
+                this.value = that.type
                 this.setAttribute('value', that.type)
+                }
                 this.nextElementSibling.classList.remove('show')
                 this.nextElementSibling.classList.remove(that.type)
             }
+            
         })
-        
     }
 
     closeDropdown(){
+        this.ingre.value = this.type
+        this.ingre.setAttribute('value', this.type)
         this.ingre.nextElementSibling.classList.remove('show')
         this.ingre.nextElementSibling.classList.remove(this.type)
     }
-
-
-
 }
 
 
