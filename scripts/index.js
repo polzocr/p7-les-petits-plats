@@ -63,27 +63,27 @@ class Index{
 
     createIngredients(ingredients){
         document.querySelectorAll('.dropdown__all')[0].innerHTML = null
-        const dropIng = new Ingredient(ingredients ,0, 'Ingredients' , this)
+        const dropIng = new Dropdown(ingredients ,0, 'Ingredients' , this)
         dropIng.createTemplate()
-        dropIng.events(this)
+        dropIng.applyEvents(this)
     }
 
 
 
     createDevices(devices){
         document.querySelectorAll('.dropdown__all')[1].innerHTML = null
-        const dropDev = new Device(devices,1, 'Appareils', this)
+        const dropDev = new Dropdown(devices,1, 'Appareils', this)
         dropDev.createTemplate()
-        dropDev.events(this)
+        dropDev.applyEvents(this)
     }
 
 
 
     createTools(tools){
         document.querySelectorAll('.dropdown__all')[2].innerHTML = null
-        const dropTool = new Tool(tools, 2, 'Ustensiles', this)
+        const dropTool = new Dropdown(tools, 2, 'Ustensiles', this)
         dropTool.createTemplate()
-        dropTool.events(this)
+        dropTool.applyEvents(this)
     }
 
     

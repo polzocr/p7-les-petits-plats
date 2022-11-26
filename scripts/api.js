@@ -52,7 +52,7 @@ class Api {
         const allKeys = Object.keys(objectIngredients)
         this.ingredientsId = allKeys.map(key => objectIngredients[key])
         this.ingredients = [...new Set(recipeIng)]
-        return [this.ingredients, this.ingredientsId, this.ingredientsObject]
+        return [this.ingredients, this.ingredientsId]
     }
 
 
