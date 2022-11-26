@@ -253,7 +253,7 @@ class Index{
                 const noElement = document.getElementById('no-element')
                 noElement ? noElement.remove():0 //supprime le message 'Aucun filtre'
                 //reaffiche les tags cachés par la recherche
-                console.log(dropdown)
+                console.log(dropdown.childsNodes)
                 dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
             }
             
