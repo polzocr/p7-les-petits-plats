@@ -33,8 +33,29 @@ class Dropdown {
             
         }
     }
-    events(that){
-        return this.applyEvents(that)
+
+    applyEvents(){
+        const This = this
+        this.dropdown.childNodes.forEach(x => {
+            x.addEventListener('click', function(e){
+                const tagName = x.textContent.toLowerCase()
+                This.getIdRecipes(This.that, this)
+                const newTag = new Tag(tagName, This.type)
+                newTag.displayTag(this.dataset.id)
+                newTag.removeTag(This.that)
+                This.closeDropdown()
+                This.that.showDatas(tagName)
+            })
+        })
+    }
+
+    getIdRecipes(that, thisEvent){
+        if(that.tabIdRecipes == 0){
+            that.tabIdRecipes = thisEvent.dataset.id.split(',').map(x => parseInt(x))
+        } else {
+            const tab = thisEvent.dataset.id.split(',').map(x => parseInt(x))
+            that.tabIdRecipes = tab.filter(id => that.tabIdRecipes.includes(id))
+        }
     }
 
     eventOpen(){
