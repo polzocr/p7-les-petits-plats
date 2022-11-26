@@ -55,7 +55,6 @@ class Dropdown {
     eventClose(){
         const that = this
         this.ingre.addEventListener('blur', function(e){
-            console.log(e.relatedTarget)
             if(!e.relatedTarget || e.relatedTarget.tagName !== 'BUTTON'){
                 if(this.value == '') {
                 this.value = that.type

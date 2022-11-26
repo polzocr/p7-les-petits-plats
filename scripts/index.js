@@ -137,8 +137,15 @@ class Index{
 
     removeTags(){
         this.tabIdRecipes = []
+        let tabQuery = []
         const tags = document.querySelectorAll('.tag')
+        const querySearch = document.querySelector('#Recherche').value
         this.showEverything()
+        this.recipesQuery.forEach((recipe, index) => {
+            if(recipe.includes(querySearch)){
+                tabQuery.push(index + 1)
+            }
+        })
         if(tags.length > 0){
             tags.forEach((tag,index) => {
                 const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
@@ -149,21 +156,49 @@ class Index{
                 }
                 this.showDatas(tag.firstChild.textContent)
             })
-        }    
+        }  
+        if(querySearch.length > 2){
+            this.section.childNodes.forEach(sec => {
+                tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
+            })
+            this.dropdowns[0].childNodes.forEach(node => {
+                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => tabQuery.includes(id))
+                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+            })
+            this.dropdowns[1].childNodes.forEach(node => {
+                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => tabQuery.includes(id))
+                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+            })
+            this.dropdowns[2].childNodes.forEach(node => {
+                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
+                const tab = datasetId.filter(id => tabQuery.includes(id))
+                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+            })
+        }
     }
 
     showEverything(){
         this.section.childNodes.forEach(recipe => {
             recipe.classList.remove('hidden')
+            recipe.classList.remove('hidden-query-tag')
+            recipe.classList.remove('hidden-query')
         })
         this.dropdowns[0].childNodes.forEach(ingredient => {
             ingredient.classList.remove('hidden')
+            ingredient.classList.remove('hidden-query-tag')
+            ingredient.classList.remove('hidden-query')
         })
         this.dropdowns[1].childNodes.forEach(device => {
             device.classList.remove('hidden')
+            device.classList.remove('hidden-query-tag')
+            device.classList.remove('hidden-query')
         })
         this.dropdowns[2].childNodes.forEach(tool => {
             tool.classList.remove('hidden')
+            tool.classList.remove('hidden-query-tag')
+            tool.classList.remove('hidden-query')
         })
     }
 
@@ -171,25 +206,69 @@ class Index{
         const that = this
         document.querySelector('.dropdown__search.'+ element).addEventListener('input', function(e){
             const query = this.value.trim().toLowerCase()
+            let count = 0
             if(query.length > 2){
-                dropdown.childNodes.forEach(node => !node.textContent.includes(query)? node.classList.add('hidden-query-tag') : node.classList.remove('hidden-query-tag'))
+                dropdown.childNodes.forEach(node => {
+                    if(!node.textContent.includes(query) ){
+                        if(node.textContent !== 'Aucun filtre disponible'){
+                            node.classList.add('hidden-query-tag')
+                        }
+                        
+                    } else {
+                        if(node.textContent !== 'Aucun filtre disponible'){
+                            node.classList.remove('hidden-query-tag') 
+                            count++ 
+                        }
+                    } 
+                })
+                const noElement = document.getElementById('no-element')
+                if(count == 0){
+                    if(!noElement){
+                        const textNoElement = document.createElement('p')
+                        textNoElement.setAttribute('id', 'no-element')
+                        textNoElement.textContent = 'Aucun filtre disponible'
+                        dropdown.appendChild(textNoElement)
+                    }
+                } else {
+                    noElement ? noElement.remove():0
+                }
             } else {
+                const noElement = document.getElementById('no-element')
+                noElement ? noElement.remove():0
                 dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
             }
+            
         })
     }
 
     eventRecipes(){
         const that = this;
+        
         document.querySelector('#Recherche').addEventListener('input', function(e){
         const query = this.value.trim().toLowerCase()
             if(query.length > 2){
-                const tabQuery = []
+                let tabQuery = []
+                //let tabTags = []
                 that.recipesQuery.forEach((recipe, index) => {
                     if(recipe.includes(query)){
                         tabQuery.push(index + 1)
                     }
                 })
+                //const tags = document.querySelectorAll('.tag')
+                // if(tags.length > 0){
+                //     tags.forEach((tag,index) => {
+                //         const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
+                //         if(index == 0){
+                //             tabTags = datasetId
+                //         } else {
+                //             tabTags = datasetId.filter(id => tabTags.includes(id))
+                //         }
+                //     })
+                // tabQuery = tabQuery.filter(id => tabTags.includes(id))
+                // }
+                if(that.tabIdRecipes.length > 0){
+                    tabQuery = tabQuery.filter(id => that.tabIdRecipes.includes(id))
+                } 
                 that.section.childNodes.forEach(sec => {
                     tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
                 })
@@ -208,7 +287,20 @@ class Index{
                     const tab = datasetId.filter(id => tabQuery.includes(id))
                     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
                 })
+                const noResult = document.getElementById('no-result')
+                if(tabQuery.length == 0){
+                    if(!noResult){
+                        const noRecipeText = document.createElement('p')
+                        noRecipeText.setAttribute('id', 'no-result')
+                        noRecipeText.textContent = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.'
+                        document.querySelector('main').appendChild(noRecipeText)
+                    }
+                } else {
+                    noResult? noResult.remove():0
+                }
             } else {
+                const noResult = document.getElementById('no-result')
+                noResult? noResult.remove():0
                 that.section.childNodes.forEach(sec => sec.classList.remove('hidden-query'))
                 that.dropdowns[0].childNodes.forEach(node => node.classList.remove('hidden-query'))
                 that.dropdowns[1].childNodes.forEach(node => node.classList.remove('hidden-query'))
