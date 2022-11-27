@@ -62,7 +62,7 @@ class Api {
     }
 
 
-
+    //recupération et formatages des données appareils
     async getDevices(){
         const recipeDevices = []
         const objectDevices = {}
@@ -76,11 +76,11 @@ class Api {
         const allKeys = Object.keys(objectDevices)
         this.devicesId = allKeys.map(key => objectDevices[key])
         
-        return [this.devices, this.devicesId, this.devicesObject]
+        return [this.devices, this.devicesId]
     }
 
 
-
+ //recupération et formatages des données ustensiles
     async getTools(){
         const recipeTools = []
         const objectTools = {}
@@ -95,7 +95,7 @@ class Api {
         this.tools = [...new Set(recipeTools)]
         const allKeys = Object.keys(objectTools)
         this.toolsId = allKeys.map(key => objectTools[key])
-        return [this.tools, this.toolsId, this.toolsObject]
+        return [this.tools, this.toolsId]
     }
 }
 

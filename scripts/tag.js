@@ -5,11 +5,7 @@ class Tag{
     }
 
     displayTag(dataId){
-        // const element = `<div class="tag ${this.type}">
-        //                     <p>${this.name}</p>
-        //                     <button class="${this.type}"><span>+</span></button>
-        //                 </div>`;
-        // document.querySelector('#tags').innerHTML += element
+        // creation d'un tag une fois l'élément cliqué
         const divTag = document.createElement('div')
         divTag.setAttribute('class', 'tag')
         divTag.classList.add(this.type)
@@ -28,12 +24,13 @@ class Tag{
         document.querySelector('#tags').appendChild(divTag)
     }
 
+    //evenement de suppresion du tag et appelle de la fonction removeTags()
     removeTag(that){
         const tags = document.querySelectorAll('#tags .tag p')
         tags.forEach(tag => {
             tag.nextElementSibling.addEventListener('click', function(e){
-                this.parentElement.remove()
-                that.removeTags()
+                this.parentElement.remove() //suppression
+                that.removeTags()   //reaffichage des bons elements
             })
         })
     }
