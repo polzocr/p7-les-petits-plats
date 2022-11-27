@@ -23,6 +23,7 @@ class Index{
         this.queryTools = []
         this.queryTagTool = []
         this.search()
+        this.timer = []
     }
 
 
@@ -38,6 +39,7 @@ class Index{
 
         this.tools = await this.api.getTools()
         this.newTools = this.tools
+        
     }
 
     async getNewRecipes(){
@@ -141,7 +143,6 @@ class Index{
             this.displayDevices(this.newDevices)
             this.displayTools(this.newTools)
         }
-        
     }
 
     async displayDatas(){
@@ -301,6 +302,7 @@ class Index{
     async eventRecipes(){
         const that = this;
         document.querySelector('#Recherche').addEventListener('input', function(e){
+            const date1 = Date.now()
             const query = this.value
             if(query.length > 2){
                 that.searchRecipes(query)
@@ -308,20 +310,24 @@ class Index{
                 that.displayIngredients(that.queryIngredients)
                 that.displayDevices(that.queryDevices)
                 that.displayTools(that.queryTools)
+                
             } else {
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
                     that.displayRecipes(that.recipes)
                     that.displayIngredients(that.ingredients)
                     that.displayDevices(that.devices)
                     that.displayTools(that.tools)
+                    
                 } else {
                     that.displayRecipes(that.newRecipes)
                     that.displayIngredients(that.newIngredients)
                     that.displayDevices(that.newDevices)
                     that.displayTools(that.newTools)
+                    
                 }
             }
         })
+        
     }
 
     
@@ -332,9 +338,6 @@ class Index{
         this.eventDevices()
         this.eventTools()
     }
-
-
-
 
 
 
