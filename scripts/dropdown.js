@@ -33,18 +33,18 @@ class Dropdown {
             
         }
     }
+
     applyEvents(){
-        const ingreThis = this
+        const This = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
                 const tagName = x.textContent.toLowerCase()
-                ingreThis.getIdRecipes(ingreThis.that, this)
-                const newTag = new Tag(tagName, ingreThis.type)
+                This.getIdRecipes(This.that, this)
+                const newTag = new Tag(tagName, This.type)
                 newTag.displayTag(this.dataset.id)
-                newTag.removeTag(ingreThis.that)
-                ingreThis.closeDropdown()
-                ingreThis.that.showDatas(tagName)
-                //that.updateDatas()
+                newTag.removeTag(This.that)
+                This.closeDropdown()
+                This.that.showDatas(tagName)
             })
         })
     }

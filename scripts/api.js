@@ -19,6 +19,7 @@ class Api {
 
     }
 
+    //recupération des recettes de l'api
     async getRecipes() {
         return fetch(this._url)
             .then(res => res.json())
@@ -29,6 +30,8 @@ class Api {
             .catch(err => console.log('an error occurs', err))
     }
 
+    //creation du tableau qui servira pour la recherche principale
+    //avec titre/description/ingredients
     async RecipesQuery(){
         this.recipes.forEach((recipe,index) => {
             this.recipesQuery.push(this.ingredientsObject[index] + ' ' +  recipe.name.toLowerCase() + ' ' +  recipe.description.toLowerCase())
@@ -36,27 +39,30 @@ class Api {
         return [this.recipesQuery]
     }
 
+    //recupération des ingredients
+    // creation du tableau avec chaque ingredients par recettes
     async getIngredients(){
-        const recipeIng = []
+        const recipeIng = []//tableau temporaire des ingredients avec doublons
         const objectIngredients = {}
-        this.recipes.forEach((recipe,index) => {
+        this.recipes.forEach((recipe,index) => { //pour chaque recette
             let string = ""
-            recipe.ingredients.forEach(ingredient => {
+            recipe.ingredients.forEach(ingredient => { //on sort les ingredients
                 const lowerIngredients = ingredient.ingredient.toLowerCase()
                 string += lowerIngredients + ' '
+                //on créé un objet avec comme les ingredients en clé et l'index recette en valeur
                 objectIngredients[lowerIngredients] = objectIngredients[lowerIngredients] ? `${objectIngredients[lowerIngredients]}, ${index + 1}` : `${index + 1}` 
                 recipeIng.push(lowerIngredients)
             })
             this.ingredientsObject.push(string)
         })
         const allKeys = Object.keys(objectIngredients)
-        this.ingredientsId = allKeys.map(key => objectIngredients[key])
-        this.ingredients = [...new Set(recipeIng)]
+        this.ingredientsId = allKeys.map(key => objectIngredients[key])//chaque ingredients est present dans x recettes
+        this.ingredients = [...new Set(recipeIng)] //on filtre les doublons
         return [this.ingredients, this.ingredientsId]
     }
 
 
-
+    //recupération et formatages des données appareils
     async getDevices(){
         const recipeDevices = []
         const objectDevices = {}
@@ -70,11 +76,11 @@ class Api {
         const allKeys = Object.keys(objectDevices)
         this.devicesId = allKeys.map(key => objectDevices[key])
         
-        return [this.devices, this.devicesId, this.devicesObject]
+        return [this.devices, this.devicesId]
     }
 
 
-
+ //recupération et formatages des données ustensiles
     async getTools(){
         const recipeTools = []
         const objectTools = {}
@@ -89,7 +95,7 @@ class Api {
         this.tools = [...new Set(recipeTools)]
         const allKeys = Object.keys(objectTools)
         this.toolsId = allKeys.map(key => objectTools[key])
-        return [this.tools, this.toolsId, this.toolsObject]
+        return [this.tools, this.toolsId]
     }
 }
 

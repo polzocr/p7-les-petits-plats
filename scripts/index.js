@@ -4,28 +4,25 @@ class Index{
         this.section = document.getElementById('cards')
         this.dropdowns =  document.querySelectorAll('.dropdown__all')
 
-        this.recipes = [] 
-        this.tabIdRecipes = []
-        this.recipesNodes = []
-        this.recipesQuery = []
+        this.recipes = []   //toutes les recettes
+        this.tabIdRecipes = []  //id des recettes voulues
+        this.recipesQuery = [] //titre,description et ingredients de chaque recette rassemblés
 
-        this.ingredients = []
-        this.ingredientsId = []
-        this.ingredientsNodes = []
+        this.ingredients = [] //les ingredients
+        this.ingredientsId = [] //ingredients par recettes
 
-        this.devices = []
-        this.devicesId = []
-        this.devicesNodes = []
+        this.devices = []   //appareils
+        this.devicesId = [] //appareils par recette
 
-        this.tools = []
-        this.toolsId = []
-        this.toolsNodes = []
+        this.tools = [] //ustensiles
+        this.toolsId = []   //ustensiles par recettes
 
-        this.search()
+        this.search()   //events bar de recherche et recherche de tag
 
     }
 
 
+    //on recupère les données de l'api ainsi que les nouveau objets et tableaux
     async fetchData(){
         this.recipes = await this.api.getRecipes()
         
@@ -49,7 +46,7 @@ class Index{
     }
 
 
-
+//creation des cards recette au lancement
     createRecipes(recipes){
         this.section.innerHTML =  null
         recipes.forEach(recipe => {
@@ -60,27 +57,24 @@ class Index{
     }
 
 
-
+//creation du dropdown ingredient au lancement
     createIngredients(ingredients){
-        document.querySelectorAll('.dropdown__all')[0].innerHTML = null
-        const dropIng = new Dropdown(ingredients ,0, 'Ingredients' , this)
-        dropIng.createTemplate()
-        dropIng.applyEvents(this)
+        const dropIng = new Dropdown(ingredients ,0, 'Ingredients' , this) //creation de chaque tag ingredients
+        dropIng.createTemplate() //creation des templates
+        dropIng.applyEvents(this) //application des events aux clicks sur les tags
     }
 
 
-
+//creation du dropdown appareil au lancement
     createDevices(devices){
-        document.querySelectorAll('.dropdown__all')[1].innerHTML = null
         const dropDev = new Dropdown(devices,1, 'Appareils', this)
         dropDev.createTemplate()
         dropDev.applyEvents(this)
     }
 
 
-
+//creation du dropdown ustensile au lancement
     createTools(tools){
-        document.querySelectorAll('.dropdown__all')[2].innerHTML = null
         const dropTool = new Dropdown(tools, 2, 'Ustensiles', this)
         dropTool.createTemplate()
         dropTool.applyEvents(this)
@@ -88,7 +82,7 @@ class Index{
 
     
 
-
+//creation du html
     createDatas(){
         this.createRecipes(this.recipes)
         this.createIngredients(this.ingredients)
@@ -96,6 +90,8 @@ class Index{
         this.createTools(this.tools)
     }
 
+    //affichage des bonnes recettes
+    //pour chaque recettes on regarde si l'id correspond
     showRecipes(){
         this.section.childNodes.forEach(sec => {
             if(!this.tabIdRecipes.includes(parseInt(sec.dataset.id))){
@@ -104,49 +100,62 @@ class Index{
         })
     }
 
+    //filtre les differents id des ingredients par rapports aux id des recettes
+    //et retourne un tableau 
+    getFilterIdRecipes(element){
+        const datasetId = element.dataset.id.split(',').map(id => parseInt(id))//recupération des data-id
+        const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))//filter avec les id des recttes
+        return tab
+    }
+
+    //affichage des bons ingredients
     showIngredients(tagName){
         this.dropdowns[0].childNodes.forEach(ingredient => {
-            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
+            const tab = this.getFilterIdRecipes(ingredient) //filtrage
+            //si le tableau est non null et on affiche pas le tag selectionné
             if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
                 ingredient.classList.add('hidden')
             } 
         })
-    }
-    
+    }    
 
+    //affichage des bons appareils
     showDevices(tagName){
-        this.dropdowns[1].childNodes.forEach(ingredient => {
-            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-            if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
-                ingredient.classList.add('hidden')
+        this.dropdowns[1].childNodes.forEach(device => {
+            const tab = this.getFilterIdRecipes(device)
+            if(tab.length == 0 || device.textContent.toLowerCase() == tagName){
+                device.classList.add('hidden')
             } 
         })
     }
 
+    //affichage des bons ustensiles
     showTools(tagName){
-        this.dropdowns[2].childNodes.forEach(ingredient => {
-            const datasetId = ingredient.dataset.id.split(',').map(id => parseInt(id))
-            const tab = datasetId.filter(id => this.tabIdRecipes.includes(id))
-            if(tab.length == 0 || ingredient.textContent.toLowerCase() == tagName){
-                ingredient.classList.add('hidden')
+        this.dropdowns[2].childNodes.forEach(tool => {
+            const tab = this.getFilterIdRecipes(tool)
+            if(tab.length == 0 || tool.textContent.toLowerCase() == tagName){
+                tool.classList.add('hidden')
             } 
         })
     }
 
+    
+    //suppression des tags
+    //on réaffiche tout
+    //on parcours chaque tag en affichange ceux qui correspondent aux recettes
+    //on affiche ou cache en fonction de la barre de recherche
     removeTags(){
         this.tabIdRecipes = []
         let tabQuery = []
         const tags = document.querySelectorAll('.tag')
-        const querySearch = document.querySelector('#Recherche').value
+        const querySearch = document.querySelector('#Recherche').value //valeur de la recherche
         this.showEverything()
-        this.recipesQuery.forEach((recipe, index) => {
+        this.recipesQuery.forEach((recipe, index) => { //on sort les id correspondant a la recherche
             if(recipe.includes(querySearch)){
-                tabQuery.push(index + 1)
+                tabQuery.push(index + 1) //index + 1 car notre tableau commence a 0
             }
         })
-        if(tags.length > 0){
+        if(tags.length > 0){ //s'il y a des tags, on affiche les données correspondantes
             tags.forEach((tag,index) => {
                 const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
                 if(index == 0){
@@ -157,150 +166,153 @@ class Index{
                 this.showDatas(tag.firstChild.textContent)
             })
         }  
-        if(querySearch.length > 2){
+        if(querySearch.length > 2){ //s'il y a une recheche on affiche ou cache les elements
             this.section.childNodes.forEach(sec => {
                 tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
             })
             this.dropdowns[0].childNodes.forEach(node => {
-                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => tabQuery.includes(id))
-                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+                this.getFilterTabQuery(node, tabQuery)
             })
             this.dropdowns[1].childNodes.forEach(node => {
-                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => tabQuery.includes(id))
-                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+                this.getFilterTabQuery(node, tabQuery)
             })
             this.dropdowns[2].childNodes.forEach(node => {
-                const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                const tab = datasetId.filter(id => tabQuery.includes(id))
-                tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+                this.getFilterTabQuery(node, tabQuery)
             })
         }
     }
 
+    //filtre les dataset-id par rapport a notre tableau d'id recettes
+    getFilterTabQuery(node, tabQuery){
+        const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
+        const tab = datasetId.filter(id => tabQuery.includes(id))
+        tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
+    }
+
+    //enleve les classes qui cachent les elements
+    removeHidden(element){
+        element.classList.remove('hidden')
+        element.classList.remove('hidden-query-tag')
+        element.classList.remove('hidden-query')
+    }
+
+    //affichages de toutes les datas
     showEverything(){
         this.section.childNodes.forEach(recipe => {
-            recipe.classList.remove('hidden')
-            recipe.classList.remove('hidden-query-tag')
-            recipe.classList.remove('hidden-query')
+            this.removeHidden(recipe)
         })
         this.dropdowns[0].childNodes.forEach(ingredient => {
-            ingredient.classList.remove('hidden')
-            ingredient.classList.remove('hidden-query-tag')
-            ingredient.classList.remove('hidden-query')
+            this.removeHidden(ingredient)
         })
         this.dropdowns[1].childNodes.forEach(device => {
-            device.classList.remove('hidden')
-            device.classList.remove('hidden-query-tag')
-            device.classList.remove('hidden-query')
+            this.removeHidden(device)
         })
         this.dropdowns[2].childNodes.forEach(tool => {
-            tool.classList.remove('hidden')
-            tool.classList.remove('hidden-query-tag')
-            tool.classList.remove('hidden-query')
+            this.removeHidden(tool)
         })
     }
 
+    /*
+    evenements pour les tags
+    on créer un tableau par rapport a la recherche
+    et on affiche ou pas les elements
+    s'il n'y a pas de resultat à la recherche, on affiche un message d'erreur
+    */
     eventsInput(element, dropdown){
         const that = this
         document.querySelector('.dropdown__search.'+ element).addEventListener('input', function(e){
             const query = this.value.trim().toLowerCase()
             let count = 0
-            if(query.length > 2){
-                dropdown.childNodes.forEach(node => {
-                    if(!node.textContent.includes(query) ){
+            if(query.length > 2){ //valeur recherche > 2
+                dropdown.childNodes.forEach(node => { //pour chaque tag
+                    if(!node.textContent.includes(query) ){ //s'il ny a pas de tags correspondant
                         if(node.textContent !== 'Aucun filtre disponible'){
-                            node.classList.add('hidden-query-tag')
+                            node.classList.add('hidden-query-tag') //on cache
                         }
                         
                     } else {
-                        if(node.textContent !== 'Aucun filtre disponible'){
-                            node.classList.remove('hidden-query-tag') 
-                            count++ 
+                        if(node.textContent !== 'Aucun filtre disponible'){//s'il y en a
+                            node.classList.remove('hidden-query-tag') //on affiche
+                            count++ //compteur pour savoir combien d'element correspondent
                         }
                     } 
                 })
                 const noElement = document.getElementById('no-element')
-                if(count == 0){
+                if(count == 0){ //aucun element ne correspond ?
                     if(!noElement){
-                        const textNoElement = document.createElement('p')
+                        const textNoElement = document.createElement('p') //creation message 'Aucun filtre'
                         textNoElement.setAttribute('id', 'no-element')
                         textNoElement.textContent = 'Aucun filtre disponible'
                         dropdown.appendChild(textNoElement)
                     }
                 } else {
-                    noElement ? noElement.remove():0
+                    noElement ? noElement.remove():0 //on supprime le message si des tags sont restants
                 }
-            } else {
+            } else { // recherche < 2 
                 const noElement = document.getElementById('no-element')
-                noElement ? noElement.remove():0
+                noElement ? noElement.remove():0 //supprime le message 'Aucun filtre'
+                //reaffiche les tags cachés par la recherche
                 dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
             }
             
         })
     }
 
+    /**Evenement de recherche de recette avec la barre principale
+     * s'il y a des tags, on recupère un tableau filtrer des id des recettes
+     * on affiche les bons elements en regadant les id des recettes et des tags
+     * ou on affiche un message d'erreur
+     */
     eventRecipes(){
         const that = this;
         
         document.querySelector('#Recherche').addEventListener('input', function(e){
         const query = this.value.trim().toLowerCase()
-            if(query.length > 2){
+            if(query.length > 2){ //recherche > 2
                 let tabQuery = []
                 //let tabTags = []
-                that.recipesQuery.forEach((recipe, index) => {
+                that.recipesQuery.forEach((recipe, index) => { //recupère les recettes correspondantes
                     if(recipe.includes(query)){
                         tabQuery.push(index + 1)
                     }
                 })
-                //const tags = document.querySelectorAll('.tag')
-                // if(tags.length > 0){
-                //     tags.forEach((tag,index) => {
-                //         const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
-                //         if(index == 0){
-                //             tabTags = datasetId
-                //         } else {
-                //             tabTags = datasetId.filter(id => tabTags.includes(id))
-                //         }
-                //     })
-                // tabQuery = tabQuery.filter(id => tabTags.includes(id))
-                // }
-                if(that.tabIdRecipes.length > 0){
+                
+                if(that.tabIdRecipes.length > 0){ //s'il y a un ou des tags
                     tabQuery = tabQuery.filter(id => that.tabIdRecipes.includes(id))
                 } 
-                that.section.childNodes.forEach(sec => {
+                that.section.childNodes.forEach(sec => { //affichage recettes
                     tabQuery.includes(parseInt(sec.dataset.id)) ? sec.classList.remove('hidden-query') : sec.classList.add('hidden-query')
                 })
-                that.dropdowns[0].childNodes.forEach(node => {
+                that.dropdowns[0].childNodes.forEach(node => { //affichages ingredients
                     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
                     const tab = datasetId.filter(id => tabQuery.includes(id))
                     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
                 })
-                that.dropdowns[1].childNodes.forEach(node => {
+                that.dropdowns[1].childNodes.forEach(node => { //affichage appareils
                     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
                     const tab = datasetId.filter(id => tabQuery.includes(id))
                     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
                 })
-                that.dropdowns[2].childNodes.forEach(node => {
+                that.dropdowns[2].childNodes.forEach(node => { //affichage ustensiles
                     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
                     const tab = datasetId.filter(id => tabQuery.includes(id))
                     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
                 })
                 const noResult = document.getElementById('no-result')
-                if(tabQuery.length == 0){
+                if(tabQuery.length == 0){ // s'il n'y a aucun element
                     if(!noResult){
-                        const noRecipeText = document.createElement('p')
+                        const noRecipeText = document.createElement('p')//creation message 'Aucune recette'
                         noRecipeText.setAttribute('id', 'no-result')
                         noRecipeText.textContent = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.'
                         document.querySelector('main').appendChild(noRecipeText)
                     }
                 } else {
-                    noResult? noResult.remove():0
+                    noResult? noResult.remove():0 //suppression du message s'il existe et qu'il y a des elements a afficher
                 }
-            } else {
+            } else { // recherche < 2
                 const noResult = document.getElementById('no-result')
                 noResult? noResult.remove():0
+                //reaffichage de tous les éléments cachés par la recherche
                 that.section.childNodes.forEach(sec => sec.classList.remove('hidden-query'))
                 that.dropdowns[0].childNodes.forEach(node => node.classList.remove('hidden-query'))
                 that.dropdowns[1].childNodes.forEach(node => node.classList.remove('hidden-query'))
@@ -309,6 +321,7 @@ class Index{
         })
     }
 
+    //evenements de recherche recettes et tags
     search(){
         this.eventRecipes()
         this.eventsInput('Ingredients', this.dropdowns[0])
@@ -317,6 +330,7 @@ class Index{
     }
 
 
+    //affichage de touts les bons éléments d'un coup
     showDatas(tagName){
         this.showRecipes()
         this.showIngredients(tagName)
@@ -324,6 +338,7 @@ class Index{
         this.showTools(tagName)
     }
 
+    //appelle des data et creation du html
     async main(){
         await this.fetchData()
         this.createDatas()
@@ -338,7 +353,18 @@ rec.main()
 
 
     
-
+//const tags = document.querySelectorAll('.tag')
+                // if(tags.length > 0){
+                //     tags.forEach((tag,index) => {
+                //         const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
+                //         if(index == 0){
+                //             tabTags = datasetId
+                //         } else {
+                //             tabTags = datasetId.filter(id => tabTags.includes(id))
+                //         }
+                //     })
+                // tabQuery = tabQuery.filter(id => tabTags.includes(id))
+                // }
 
 // that.recipesNodes.forEach(node => {
                     //     tabQuery.includes(parseInt(node.dataset.id)) ? node.classList.remove('hidden-query'): node.classList.add('hidden-query')
