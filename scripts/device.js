@@ -13,9 +13,10 @@ class Device extends Dropdown{
         const devThis = this
         this.dropdown.childNodes.forEach(x => {
             x.addEventListener('click', function(e){
-                that.tags.push(x.textContent)
-                tags.push(x.textContent)
-                const newTag = new Tag(x.textContent, 'Appareils')
+                const tagName = x.textContent.toLowerCase()
+                that.tags.push(tagName)
+                tags.push(tagName)
+                const newTag = new Tag(tagName, 'Appareils')
                 newTag.displayTag()
                 newTag.removeTag(that)
                 devThis.closeDropdown()

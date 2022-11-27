@@ -26,25 +26,38 @@ class Dropdown {
     eventOpen(){
         const that = this
         this.ingre.addEventListener('click', function(e){
+            const placeholder = this.placeholder
+            if(this.value == 'Ingredients' || this.value =='Appareils' || this.value == 'Ustensiles'){
+                this.value = ''
+            }
+            
             this.removeAttribute('value')
+            this.setAttribute('placeholder', placeholder) //affichage du placeholder lors du click
             this.nextElementSibling.classList.add('show')
             this.nextElementSibling.classList.add(that.type)
         })
     }
 
+    //fermeture du dropdown lors du click
     eventClose(){
         const that = this
         this.ingre.addEventListener('blur', function(e){
-            if(e.relatedTarget == null){
+            if(!e.relatedTarget || e.relatedTarget.tagName !== 'BUTTON'){//si on click autre part que sur un tag
+                if(this.value == '') {
+                this.value = that.type
                 this.setAttribute('value', that.type)
+                }
                 this.nextElementSibling.classList.remove('show')
                 this.nextElementSibling.classList.remove(that.type)
             }
+            
         })
-        
     }
-
+    //on ferme le drop down si on ajoute un tag et on réinitialise les elements
     closeDropdown(){
+        this.dropdown.childNodes.forEach(node => node.classList.remove('hidden-query-tag'))
+        this.ingre.value = this.type
+        this.ingre.setAttribute('value', this.type)
         this.ingre.nextElementSibling.classList.remove('show')
         this.ingre.nextElementSibling.classList.remove(this.type)
     }

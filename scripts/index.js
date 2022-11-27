@@ -40,17 +40,17 @@ class Index{
     async getNewRecipes(){
         if(this.tagsIng.length > 0){
             this.tagsIng.forEach(tag => {
-                this.newRecipes = this.newRecipes.filter(recipe =>  recipe.ingredients.some(ing => ing.ingredient == tag ) == true)
+                this.newRecipes = this.newRecipes.filter(recipe =>  recipe.ingredients.some(ing => ing.ingredient.toLowerCase() == tag ) == true)
             })
         }
         if(this.tagsDev.length > 0){
             this.tagsDev.forEach(tag => {
-                this.newRecipes = this.newRecipes.filter(recipe => recipe.appliance == tag)
+                this.newRecipes = this.newRecipes.filter(recipe => recipe.appliance.toLowerCase() == tag)
             })
         } 
         if(this.tagsTool.length > 0){
             this.tagsTool.forEach(tag => {
-                this.newRecipes = this.newRecipes.filter(recipe => recipe.ustensils.some(ust => ust == tag) == true)
+                this.newRecipes = this.newRecipes.filter(recipe => recipe.ustensils.some(ust => ust.toLowerCase() == tag) == true)
             })
         }
     }
@@ -67,7 +67,11 @@ class Index{
     async getNewIngredients(){
         const recipeIng = []
         this.newRecipes.forEach(recipe => {
-            recipe.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient))
+            recipe.ingredients.forEach(ingredient => {
+                if(!this.tagsIng.includes(ingredient.ingredient.toLowerCase())){
+                    recipeIng.push(ingredient.ingredient.toLowerCase())
+                }
+            })
         })
         this.newIngredients =  [...new Set(recipeIng)]
     }
@@ -82,7 +86,9 @@ class Index{
     async getNewDevices(){
         const recipeDevices = []
         this.newRecipes.forEach(recipe => {
-            recipeDevices.push(recipe.appliance)
+            if(!this.tagsDev.includes(recipe.appliance.toLowerCase())){
+                recipeDevices.push(recipe.appliance.toLowerCase())
+            }
         })
         this.newDevices =  [...new Set(recipeDevices)]
     }
@@ -97,7 +103,11 @@ class Index{
     async getNewTools(){
         const recipeTools = []
         this.newRecipes.forEach(recipe => {
-            recipe.ustensils.forEach(ustensil => recipeTools.push(ustensil))
+            recipe.ustensils.forEach(ustensil => {
+                if(!this.tagsTool.includes(ustensil.toLowerCase())){
+                    recipeTools.push(ustensil.toLowerCase())
+                }
+            })
         })
         this.newTools = [...new Set(recipeTools)]
     }
@@ -244,59 +254,6 @@ class Index{
         this.eventDevices()
         this.eventTools()
     }
-
-
-
-
-
-
-
-
-    
-
-    
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-
- 
-
-    
-
-    
-
-
-
-
-
-
-
-  
-    
-
- 
-
-
-   
-
-   
-
-
 
 
 

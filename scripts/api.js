@@ -17,7 +17,7 @@ class Api {
     async getIngredients(){
         const recipeIng = []
         this.recipes.forEach(recipe => {
-            recipe.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient))
+            recipe.ingredients.forEach(ingredient => recipeIng.push(ingredient.ingredient.toLowerCase()))
         })
         return [...new Set(recipeIng)]
     }
@@ -25,7 +25,7 @@ class Api {
     async getDevices(){
         const recipeDevices = []
         this.recipes.forEach(recipe => {
-            recipeDevices.push(recipe.appliance)
+            recipeDevices.push(recipe.appliance.toLowerCase())
         })
         return [...new Set(recipeDevices)]
     }
@@ -33,7 +33,7 @@ class Api {
     async getTools(){
         const recipeTools = []
         this.recipes.forEach(recipe => {
-            recipe.ustensils.forEach(ustensil => recipeTools.push(ustensil))
+            recipe.ustensils.forEach(ustensil => recipeTools.push(ustensil.toLowerCase()))
         })
         return [...new Set(recipeTools)]
     }
