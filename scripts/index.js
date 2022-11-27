@@ -17,8 +17,11 @@ class Index{
         
         this.queryRecipes = []
         this.queryIngredients = []
+        this.queryTagIng = []
         this.queryDevices = []
+        this.queryTagDev = []
         this.queryTools = []
+        this.queryTagTool = []
         this.search()
     }
 
@@ -121,14 +124,24 @@ class Index{
 
     
     async updateDatas(){
+        const searchQuery = document.getElementById('Recherche').value
         this.getNewRecipes()
-        this.displayRecipes(this.newRecipes)
         this.getNewIngredients()
-        this.displayIngredients(this.newIngredients)
         this.getNewDevices()
-        this.displayDevices(this.newDevices)
         this.getNewTools()
-        this.displayTools(this.newTools)
+        if(searchQuery.length > 2){
+            this.searchRecipes(searchQuery)
+            this.displayRecipes(this.queryRecipes)
+            this.displayIngredients(this.queryIngredients)
+            this.displayDevices(this.queryDevices)
+            this.displayTools(this.queryTools)
+        } else {
+            this.displayRecipes(this.newRecipes)
+            this.displayIngredients(this.newIngredients)
+            this.displayDevices(this.newDevices)
+            this.displayTools(this.newTools)
+        }
+        
     }
 
     async displayDatas(){
@@ -154,22 +167,32 @@ class Index{
 
     
     async searchIng(query){
-        const search = this.newIngredients.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        this.queryIngredients = [...new Set(search)]
+        const searchQuery = document.getElementById('Recherche').value
+        if(searchQuery.length < 3){
+            const search = this.newIngredients.filter(x => x.toLowerCase().includes(query))
+            this.queryTagIng = [...new Set(search)]
+        } else {
+            const search = this.queryIngredients.filter(x => x.toLowerCase().includes(query))
+            this.queryTagIng = [...new Set(search)]
+        }
+        
     }
 
     async eventIngredients(){
         const that = this;
         document.querySelector('.dropdown__search.Ingredients').addEventListener('input', function(e){
-            const query = this.value
+            const query = this.value.toLowerCase()
+            const searchQuery = document.getElementById('Recherche').value
             if(query.length > 2){
                 that.searchIng(query)
-                that.displayIngredients(that.queryIngredients)
+                that.displayIngredients(that.queryTagIng)
             } else {
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-                    that.displayIngredients(that.ingredients)
+                    searchQuery.length > 2 ? that.displayIngredients(that.queryIngredients) : that.displayIngredients(that.ingredients)
                 } else {
-                    that.displayIngredients(that.newIngredients)
+                    console.log(that.queryIngredients)
+                    console.log(searchQuery)
+                    searchQuery.length > 2 ? that.displayIngredients(that.queryIngredients) : that.displayIngredients(that.newIngredients)
                 }
                 
             }
@@ -226,6 +249,41 @@ class Index{
         this.queryRecipes = this.newRecipes.filter(recipe => {
             return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
         })
+        this.getQueryIng()
+        this.getQueryDev()
+        this.getQueryTool()
+    }
+
+    getQueryIng(){
+        const recipeIng = []
+        this.queryRecipes.forEach(recipe => {
+            recipe.ingredients.forEach(ingredient => {
+                if(!this.tagsIng.includes(ingredient.ingredient.toLowerCase())){
+                    recipeIng.push(ingredient.ingredient.toLowerCase())
+                }
+            })
+        })
+        this.queryIngredients =  [...new Set(recipeIng)]
+    }
+    getQueryDev(){
+        const recipeDevices = []
+        this.queryRecipes.forEach(recipe => {
+            if(!this.tagsDev.includes(recipe.appliance.toLowerCase())){
+                recipeDevices.push(recipe.appliance.toLowerCase())
+            }
+        })
+        this.queryDevices =  [...new Set(recipeDevices)]
+    }
+    getQueryTool(){
+        const recipeTools = []
+        this.queryRecipes.forEach(recipe => {
+            recipe.ustensils.forEach(ustensil => {
+                if(!this.tagsTool.includes(ustensil.toLowerCase())){
+                    recipeTools.push(ustensil.toLowerCase())
+                }
+            })
+        })
+        this.queryTools = [...new Set(recipeTools)]
     }
 
     async eventRecipes(){
@@ -235,13 +293,21 @@ class Index{
             if(query.length > 2){
                 that.searchRecipes(query)
                 that.displayRecipes(that.queryRecipes)
+                that.displayIngredients(that.queryIngredients)
+                that.displayDevices(that.queryDevices)
+                that.displayTools(that.queryTools)
             } else {
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
                     that.displayRecipes(that.recipes)
+                    that.displayIngredients(that.ingredients)
+                    that.displayDevices(that.devices)
+                    that.displayTools(that.tools)
                 } else {
                     that.displayRecipes(that.newRecipes)
+                    that.displayIngredients(that.newIngredients)
+                    that.displayDevices(that.newDevices)
+                    that.displayTools(that.newTools)
                 }
-                
             }
         })
     }
