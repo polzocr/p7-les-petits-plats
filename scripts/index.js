@@ -190,8 +190,6 @@ class Index{
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
                     searchQuery.length > 2 ? that.displayIngredients(that.queryIngredients) : that.displayIngredients(that.ingredients)
                 } else {
-                    console.log(that.queryIngredients)
-                    console.log(searchQuery)
                     searchQuery.length > 2 ? that.displayIngredients(that.queryIngredients) : that.displayIngredients(that.newIngredients)
                 }
                 
@@ -200,22 +198,29 @@ class Index{
     }
 
     async searchDev(query){
-        const search = this.newDevices.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        this.queryDevices = [...new Set(search)]
+        const searchQuery = document.getElementById('Recherche').value
+        if(searchQuery.length < 3){
+            const search = this.newDevices.filter(x => x.toLowerCase().includes(query))
+            this.queryTagDev = [...new Set(search)]
+        } else {
+            const search = this.queryDevices.filter(x => x.toLowerCase().includes(query))
+            this.queryTagDev = [...new Set(search)]
+        }
     }
 
     async eventDevices(){
         const that = this;
         document.querySelector('.dropdown__search.Appareils').addEventListener('input', function(e){
-            const query = this.value
+            const query = this.value.toLowerCase()
+            const searchQuery = document.getElementById('Recherche').value
             if(query.length > 2){
                 that.searchDev(query)
-                that.displayDevices(that.queryDevices)
+                that.displayDevices(that.queryTagDev)
             } else {
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-                    that.displayDevices(that.devices)
+                    searchQuery.length > 2 ? that.displayDevices(that.queryDevices) : that.displayDevices(that.devices)
                 } else {
-                    that.displayDevices(that.newDevices)
+                    searchQuery.length > 2 ? that.displayDevices(that.queryDevices) : that.displayDevices(that.newDevices)
                 }
                 
             }
@@ -223,22 +228,29 @@ class Index{
     }
 
     async searchTool(query){
-        const search = this.newTools.filter(x => x.toLowerCase().includes(query.toLowerCase()))
-        this.queryTools = [...new Set(search)]
+        const searchQuery = document.getElementById('Recherche').value
+        if(searchQuery.length < 3){
+            const search = this.newTools.filter(x => x.toLowerCase().includes(query))
+            this.queryTagTool = [...new Set(search)]
+        } else {
+            const search = this.queryTools.filter(x => x.toLowerCase().includes(query))
+            this.queryTagTool = [...new Set(search)]
+        }
     }
 
     async eventTools(){
         const that = this;
         document.querySelector('.dropdown__search.Ustensiles').addEventListener('input', function(e){
-            const query = this.value
+            const query = this.value.toLowerCase()
+            const searchQuery = document.getElementById('Recherche').value
             if(query.length > 2){
                 that.searchTool(query)
-                that.displayTools(that.queryTools)
+                that.displayTools(that.queryTagTool)
             } else {
                 if(that.tagsIng == 0 && that.tagsDev == 0 && that.tagsTool == 0){
-                    that.displayTools(that.tools)
+                    searchQuery.length > 2 ? that.displayTools(that.queryTools) : that.displayTools(that.tools)
                 } else {
-                    that.displayTools(that.newTools)
+                    searchQuery.length > 2 ? that.displayTools(that.queryTools) : that.displayTools(that.newTools)
                 }
                 
             }
