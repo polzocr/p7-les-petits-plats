@@ -84,7 +84,7 @@
                 "unit" : "ml"
             },
             {
-                "ingredient": "Coulis de tomate",
+                "ingredient": "Coulis de tomates",
                 "quantity" : 25,
                 "unit" : "cl"
             },
@@ -103,7 +103,7 @@
             }
         ],
         "time": 80,
-        "description": "Découper le poulet en morceaux, les faire dorer dans une cocotte avec de l'huile d'olive. Salez et poivrez. Une fois doré, laisser cuire en ajoutant de l'eau. Au bout de 30 minutes, ajouter le coulis de tomate, le lait de coco ainsi que le poivron et l'oignon découpés en morceaux. Laisser cuisiner 30 minutes de plus. Servir avec du riz",
+        "description": "Découper le poulet en morceaux, les faire dorer dans une cocotte avec de l'huile d'olive. Salez et poivrez. Une fois doré, laisser cuire en ajoutant de l'eau. Au bout de 30 minutes, ajouter le coulis de tomates, le lait de coco ainsi que le poivron et l'oignon découpés en morceaux. Laisser cuisiner 30 minutes de plus. Servir avec du riz",
         "appliance": "Cocotte",
         "ustensils": ["couteau"]
     },{
@@ -185,7 +185,7 @@
     },
     {
         "id": 6,
-        "name": "Tarte aux pommes",
+        "name": "Tarte aux pomme",
         "servings": 6,
         "ingredients":[
             {
@@ -382,7 +382,7 @@
                 "unit": "tranches"
             }, 
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 1
             },
             {
@@ -410,7 +410,7 @@
                 "unit": "grammes"
             },
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 8
             },
             {
@@ -570,7 +570,7 @@
                 "unit":"tiges"
             },
             {
-                "ingredient": "huile d'olives",
+                "ingredient": "huile d'olive",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -721,7 +721,7 @@
                 "quantity": 2
             },
             {
-                "ingredient": "Coulis de tomate",
+                "ingredient": "Coulis de tomates",
                 "quantity": 300,
                 "unit":"grammes"
             },
@@ -909,7 +909,7 @@
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olives"
+                "ingredient": "Huile d'olive"
             },
             {
                 "ingredient": "Oignon",
@@ -1282,7 +1282,7 @@
                 "unit": "grammes"
             },
             {
-                "ingredient": "Huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 25,
                 "unit": "cl"
             },
@@ -1662,11 +1662,11 @@
         "servings": 4,
         "ingredients": [
             {
-                "ingredient": "Bananes",
+                "ingredient": "Banane",
                 "quantity": 2
             },
             {
-                "ingredient": "Kiwis",
+                "ingredient": "Kiwi",
                 "quantity": 3
             },
             {
