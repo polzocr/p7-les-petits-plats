@@ -42,7 +42,6 @@ class Index{
 
         const apiRecipes = await this.api.RecipesQuery()
         this.recipesQuery = apiRecipes[0]
-
     }
 
 
@@ -342,7 +341,6 @@ class Index{
     async main(){
         await this.fetchData()
         this.createDatas()
-        
     }
 
     
