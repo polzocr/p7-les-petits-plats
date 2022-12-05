@@ -259,9 +259,15 @@ class Index{
     }
 
     async searchRecipes(query){
-        this.queryRecipes = this.newRecipes.filter(recipe => {
-            return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
-        })
+        // this.queryRecipes = this.newRecipes.filter(recipe => {
+        //     return recipe.name.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || recipe.description.toLowerCase().includes(query.toLowerCase())
+        // })
+        this.queryRecipes = []
+        for(let i = 0; i < this.newRecipes.length; i++){
+            if(this.newRecipes[i].name.toLowerCase().includes(query.toLowerCase()) || this.newRecipes[i].ingredients.some(ing => ing.ingredient.toLowerCase().includes(query.toLowerCase()) == true) || this.newRecipes[i].description.toLowerCase().includes(query.toLowerCase())){
+                this.queryRecipes.push(this.newRecipes[i])
+            }
+        }
         this.getQueryIng()
         this.getQueryDev()
         this.getQueryTool()
