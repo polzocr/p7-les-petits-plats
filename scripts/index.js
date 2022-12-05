@@ -45,7 +45,7 @@ class Index{
     }
 
 
-//creation des cards recette au lancement
+    //creation des cards recette au lancement
     createRecipes(recipes){
         this.section.innerHTML =  null
         recipes.forEach(recipe => {
@@ -56,7 +56,7 @@ class Index{
     }
 
 
-//creation du dropdown ingredient au lancement
+    //creation du dropdown ingredient au lancement
     createIngredients(ingredients){
         const dropIng = new Dropdown(ingredients ,0, 'Ingredients' , this) //creation de chaque tag ingredients
         dropIng.createTemplate() //creation des templates
@@ -64,7 +64,7 @@ class Index{
     }
 
 
-//creation du dropdown appareil au lancement
+    //creation du dropdown appareil au lancement
     createDevices(devices){
         const dropDev = new Dropdown(devices,1, 'Appareils', this)
         dropDev.createTemplate()
@@ -72,7 +72,7 @@ class Index{
     }
 
 
-//creation du dropdown ustensile au lancement
+    //creation du dropdown ustensile au lancement
     createTools(tools){
         const dropTool = new Dropdown(tools, 2, 'Ustensiles', this)
         dropTool.createTemplate()
@@ -81,7 +81,7 @@ class Index{
 
     
 
-//creation du html
+    //creation du html
     createDatas(){
         this.createRecipes(this.recipes)
         this.createIngredients(this.ingredients)
@@ -266,7 +266,7 @@ class Index{
         const that = this;
         
         document.querySelector('#Recherche').addEventListener('input', function(e){
-        const query = this.value.trim().toLowerCase()
+            const query = this.value.trim().toLowerCase()
             if(query.length > 2){ //recherche > 2
                 let tabQuery = []
                 //let tabTags = []
@@ -275,7 +275,7 @@ class Index{
                         tabQuery.push(index + 1)
                     }
                 })
-                
+            
                 if(that.tabIdRecipes.length > 0){ //s'il y a un ou des tags
                     tabQuery = tabQuery.filter(id => that.tabIdRecipes.includes(id))
                 } 
@@ -351,34 +351,3 @@ rec.main()
 
 
     
-//const tags = document.querySelectorAll('.tag')
-                // if(tags.length > 0){
-                //     tags.forEach((tag,index) => {
-                //         const datasetId = tag.dataset.id.split(',').map(id => parseInt(id))
-                //         if(index == 0){
-                //             tabTags = datasetId
-                //         } else {
-                //             tabTags = datasetId.filter(id => tabTags.includes(id))
-                //         }
-                //     })
-                // tabQuery = tabQuery.filter(id => tabTags.includes(id))
-                // }
-
-// that.recipesNodes.forEach(node => {
-                    //     tabQuery.includes(parseInt(node.dataset.id)) ? node.classList.remove('hidden-query'): node.classList.add('hidden-query')
-                    // })
-                    // that.ingredientsNodes.forEach(node => {
-                    //     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                    //     const tab = datasetId.filter(id => tabQuery.includes(id))
-                    //     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
-                    // })
-                    // that.devicesNodes.forEach(node => {
-                    //     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                    //     const tab = datasetId.filter(id => tabQuery.includes(id))
-                    //     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
-                    // })
-                    // that.toolsNodes.forEach(node => {
-                    //     const datasetId = node.dataset.id.split(',').map(id => parseInt(id))
-                    //     const tab = datasetId.filter(id => tabQuery.includes(id))
-                    //     tab.length > 0 ? node.classList.remove('hidden-query') : node.classList.add('hidden-query')
-                    // })

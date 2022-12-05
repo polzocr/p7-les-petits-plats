@@ -26,13 +26,11 @@ class Dropdown {
         }
         //on créé chaque élement et on y ajout les id des recettes correspondantes dans data-id
         for(let i=0; i<this.thing.length; i++){ 
-            
-                const p = document.createElement('button')
-                p.setAttribute('class', this.type)
-                p.setAttribute('data-id', idRecipes[i])
-                p.textContent = this.thing[i]
-                this.dropdown.appendChild(p)
-            
+            const p = document.createElement('button')
+            p.setAttribute('class', this.type)
+            p.setAttribute('data-id', idRecipes[i])
+            p.textContent = this.thing[i]
+            this.dropdown.appendChild(p)
         }
     }
 
@@ -84,8 +82,8 @@ class Dropdown {
         this.ingre.addEventListener('blur', function(e){
             if(!e.relatedTarget || e.relatedTarget.tagName !== 'BUTTON'){//si on click autre part que sur un tag
                 if(this.value == '') {
-                this.value = that.type
-                this.setAttribute('value', that.type)
+                    this.value = that.type
+                    this.setAttribute('value', that.type)
                 }
                 this.nextElementSibling.classList.remove('show')
                 this.nextElementSibling.classList.remove(that.type)

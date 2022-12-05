@@ -45,7 +45,7 @@ class Api {
         const recipeIng = []//tableau temporaire des ingredients avec doublons
         const objectIngredients = {}
         this.recipes.forEach((recipe,index) => { //pour chaque recette
-            let string = ""
+            let string = ''
             recipe.ingredients.forEach(ingredient => { //on sort les ingredients
                 const lowerIngredients = ingredient.ingredient.toLowerCase()
                 string += lowerIngredients + ' '
@@ -80,7 +80,7 @@ class Api {
     }
 
 
- //recupération et formatages des données ustensiles
+    //recupération et formatages des données ustensiles
     async getTools(){
         const recipeTools = []
         const objectTools = {}
